@@ -37,3 +37,14 @@ body {
 .selected-border {
   animation: selected-border 2s linear forwards;
 }
+
+/** Visually hide scrollbars */
+.no-visual-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-visual-scrollbar ::-webkit-scrollbar {
+  background: transparent;
+  width: 0;
+  height: 0;
+}

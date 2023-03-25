@@ -185,6 +185,7 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
           {attractions.length > 0 ? (
             <FixedSizeList
               ref={listRef}
+              className="no-visual-scrollbar"
               layout="horizontal"
               itemSize={Math.min(width, CARD_SIZE)}
               height={Math.min(CARD_SIZE, (height * 3) / 5)}
