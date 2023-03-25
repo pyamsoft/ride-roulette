@@ -40,7 +40,13 @@ export const AppContent: React.FunctionComponent<AppState> = function (props) {
   React.useEffect(() => {
     const style = document.createElement("style");
     style.id = "custom-css";
-    style.innerHTML = `:root { --color-primary-main:${theme.palette.primary.main}; }`;
+
+    // Custom inject CSS into the document head.
+    // Wild.
+    style.innerHTML = `:root{
+      --color-primary-main:${theme.palette.primary.main};
+      --color-background-default:${theme.palette.background.default};
+    }`.replace(/\s+/g, "");
 
     document.head.append(style);
     return () => {

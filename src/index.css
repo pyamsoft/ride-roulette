@@ -22,8 +22,11 @@ body {
 
 @keyframes selected-border {
   from {
-    border-color: transparent;
+    /** This var is undefined in CS but is injected at runtime in AppContext */
+    /*noinspection CssUnresolvedCustomProperty*/
+    border-color: var(--color-background-default);
   }
+
   to {
     /** This var is undefined in CS but is injected at runtime in AppContext */
     /*noinspection CssUnresolvedCustomProperty*/

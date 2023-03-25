@@ -165,19 +165,23 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
       <Stack direction="column" width="100%" height="100%" overflow="hidden">
         <AppBar position="sticky" color="transparent" elevation={0}>
           <Toolbar>
-            <Typography variant="body1" color="text.primary" fontWeight={700}>
-              Ride Roulette
-            </Typography>
+            <Box my="auto" pl={2}>
+              <Typography variant="body1" color="text.primary" fontWeight={700}>
+                Ride Roulette
+              </Typography>
+            </Box>
 
             <Box flexGrow={1} />
 
-            <IconButton onClick={onDarkModeToggled}>
-              {isDark ? <DarkMode /> : <LightMode />}
-            </IconButton>
+            <Box my="auto">
+              <IconButton onClick={onDarkModeToggled}>
+                {isDark ? <DarkMode /> : <LightMode />}
+              </IconButton>
+            </Box>
           </Toolbar>
         </AppBar>
 
-        <Box mt={2} width="100%">
+        <Box width="100%">
           {attractions.length > 0 ? (
             <FixedSizeList
               ref={listRef}
@@ -203,7 +207,8 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
           direction="column"
           mt="auto"
           mx="auto"
-          p={2}
+          px={2}
+          pb={2}
           width={`min(100%, ${CARD_SIZE}px)`}
         >
           <Stack direction="row" justifyContent="center" pb={2}>
@@ -240,7 +245,7 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
             {spin ? "Spinning..." : "Spin!"}
           </Button>
 
-          <Box pt={2} mx="auto">
+          <Box mx="auto">
             <Typography
               variant="caption"
               textAlign="center"
@@ -334,7 +339,7 @@ const RideCard: React.FunctionComponent<{
             />
             <Stack direction="column" p={2} width="100%">
               <Typography
-                variant="body2"
+                variant="caption"
                 color="text.secondary"
                 fontWeight={700}
               >
