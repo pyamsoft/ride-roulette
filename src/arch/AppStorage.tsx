@@ -15,8 +15,7 @@
  */
 
 export interface AppStorage {
-    objectType: "AppStorage",
+  objectType: "AppStorage";
 
-    sessionToken: () => string;
-
+  sessionToken: () => string;
 }
