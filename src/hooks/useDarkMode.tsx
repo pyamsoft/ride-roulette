@@ -29,6 +29,10 @@ export const useDarkMode = function () {
 
   const [isDark, setDark] = React.useState(initialIsDark);
 
+  const handleDarkModeToggled = React.useCallback(() => {
+    setDark((d) => !d);
+  }, [setDark]);
+
   React.useEffect(() => {
     const listener = (e: MediaQueryListEvent) => {
       setDark(e.matches);
@@ -41,5 +45,10 @@ export const useDarkMode = function () {
     };
   }, [darkModePreference, setDark]);
 
-  return isDark;
+  return React.useMemo(() => {
+    return {
+      isDark,
+      onDarkModeToggled: handleDarkModeToggled,
+    };
+  }, [isDark, handleDarkModeToggled]);
 };

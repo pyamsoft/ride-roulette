@@ -17,14 +17,17 @@
 import { RouletteState } from "./RouletteViewModel";
 import React, { RefObject } from "react";
 import {
+  AppBar,
   Box,
   Button,
   Card,
   Checkbox,
   FormControlLabel,
+  IconButton,
   ListItemButton,
   Stack,
   SxProps,
+  Toolbar,
   Typography,
   TypographyProps,
 } from "@mui/material";
@@ -32,6 +35,7 @@ import { Attraction } from "./model/Attraction";
 import { ThemePark } from "./model/ThemePark";
 import { FixedSizeList } from "react-window";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { DarkMode, LightMode } from "@mui/icons-material";
 
 const useSpin = function (
   listRef: RefObject<FixedSizeList>,
@@ -123,6 +127,7 @@ const CARD_SIZE = 400;
 
 export const RouletteContent: React.FunctionComponent<RouletteState> =
   function (props) {
+    const { isDark, onDarkModeToggled } = props;
     const { attractions } = props;
     const { includeDisney, onToggleDisney } = props;
     const { includeCA, onToggleCA } = props;
@@ -158,6 +163,20 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
 
     return (
       <Stack direction="column" width="100%" height="100%" overflow="hidden">
+        <AppBar position="sticky" color="transparent" elevation={0}>
+          <Toolbar>
+            <Typography variant="body1" color="text.primary" fontWeight={700}>
+              Ride Roulette
+            </Typography>
+
+            <Box flexGrow={1} />
+
+            <IconButton onClick={onDarkModeToggled}>
+              {isDark ? <DarkMode /> : <LightMode />}
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+
         <Box mt={2} width="100%">
           {attractions.length > 0 ? (
             <FixedSizeList
@@ -271,6 +290,16 @@ const RideCard: React.FunctionComponent<{
 }> = function (props) {
   const { attraction, glow, spin } = props;
 
+  const [hover, setHover] = React.useState(false);
+
+  const handleMouseIn = React.useCallback(() => {
+    setHover(true);
+  }, [setHover]);
+
+  const handleMouseOut = React.useCallback(() => {
+    setHover(false);
+  }, [setHover]);
+
   const park = useParkToName(attraction.park);
 
   const handleGoTo = React.useCallback(() => {
@@ -285,8 +314,10 @@ const RideCard: React.FunctionComponent<{
       width="100%"
       height="100%"
       className={glow ? "selected-border" : undefined}
+      onMouseEnter={handleMouseIn}
+      onMouseLeave={handleMouseOut}
     >
-      <Card variant="outlined" sx={CARD_SX}>
+      <Card variant="outlined" sx={CARD_SX} elevation={hover ? 6 : 2}>
         <ListItemButton
           onClick={handleGoTo}
           dense={true}

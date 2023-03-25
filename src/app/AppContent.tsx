@@ -25,7 +25,7 @@ import { RoulettePage } from "../pages/roulette/RoulettePage";
 export const AppContent: React.FunctionComponent<AppState> = function (props) {
   const { attractions, splash, onFinishSplash } = props;
   const { width, height } = useWindowSize();
-  const isDark = useDarkMode();
+  const { isDark, onDarkModeToggled } = useDarkMode();
 
   const theme = React.useMemo(
     () =>
@@ -66,7 +66,11 @@ export const AppContent: React.FunctionComponent<AppState> = function (props) {
               onDone={onFinishSplash}
             />
           ) : (
-            <RoulettePage attractions={attractions} />
+            <RoulettePage
+              attractions={attractions}
+              isDark={isDark}
+              onDarkModeToggled={onDarkModeToggled}
+            />
           )}
         </Box>
       </ThemeProvider>

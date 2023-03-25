@@ -20,6 +20,8 @@ import { Attraction } from "./model/Attraction";
 import { ThemePark } from "./model/ThemePark";
 
 interface Shared {
+  isDark: boolean;
+  onDarkModeToggled: () => void;
   attractions: Attraction[];
 }
 
@@ -105,6 +107,7 @@ const useAttractions = function (attractions: Attraction[]) {
 export const RouletteViewModel: React.FunctionComponent<
   ViewModelProps<RouletteProps, RouletteState>
 > = function ({ children, ...props }) {
+  const { isDark, onDarkModeToggled } = props;
   const { attractions } = props;
 
   const [finalIndex, setFinalIndex] = React.useState(-1);
@@ -136,6 +139,9 @@ export const RouletteViewModel: React.FunctionComponent<
 
   const state: RouletteState = React.useMemo(() => {
     return {
+      isDark,
+      onDarkModeToggled,
+
       attractions: rideList,
 
       includeDisney,
@@ -149,6 +155,9 @@ export const RouletteViewModel: React.FunctionComponent<
       onIndexSelected: setFinalIndex,
     };
   }, [
+    isDark,
+    onDarkModeToggled,
+
     rideList,
 
     includeDisney,
