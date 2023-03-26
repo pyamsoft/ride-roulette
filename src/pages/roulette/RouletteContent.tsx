@@ -176,7 +176,7 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
     }, [selectedIndex, setRain]);
 
     React.useEffect(() => {
-      if (selectedIndex >= 0) {
+      if (selectedIndex < 0) {
         return;
       }
 
