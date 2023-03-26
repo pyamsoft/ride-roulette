@@ -323,7 +323,7 @@ const RideCard: React.FunctionComponent<{
       onMouseEnter={handleMouseIn}
       onMouseLeave={handleMouseOut}
     >
-      <Card variant="outlined" sx={CARD_SX} elevation={hover ? 6 : 2}>
+      <Card variant="elevation" sx={CARD_SX} elevation={hover ? 3 : 1}>
         <ListItemButton
           onClick={handleGoTo}
           dense={true}
