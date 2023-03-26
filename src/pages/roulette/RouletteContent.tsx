@@ -37,6 +37,37 @@ import { ThemePark } from "./model/ThemePark";
 import { FixedSizeList } from "react-window";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { DarkMode, LightMode } from "@mui/icons-material";
+import ReactConfetti from "react-confetti";
+
+/**
+ * Checkbox label props
+ */
+const LABEL_PROPS = {
+  typography: {
+    color: "text.secondary",
+    variant: "caption",
+  } as TypographyProps,
+};
+
+/**
+ * The max size of a card
+ */
+const CARD_SIZE = 400;
+
+/**
+ * Only allow Y scrolling
+ */
+const OVERFLOW_ONLY_Y = {
+  overflowX: "hidden",
+  overflowY: "auto",
+};
+
+/**
+ * Color back same as BG instead of slightly-off color
+ */
+const APP_BAR = {
+  backgroundColor: "background.default",
+};
 
 const useSpin = function (
   listRef: RefObject<FixedSizeList>,
@@ -117,100 +148,145 @@ const useSpin = function (
   }, [spin, handleSpin]);
 };
 
-const LABEL_PROPS = {
-  typography: {
-    color: "text.secondary",
-    variant: "caption",
-  } as TypographyProps,
-};
-
-const CARD_SIZE = 400;
-
-const OVERFLOW_ONLY_Y = {
-  overflowX: "hidden",
-  overflowY: "auto",
-};
-
-const APP_BAR = {
-  backgroundColor: "background.default",
-};
-
 export const RouletteContent: React.FunctionComponent<RouletteState> =
   function (props) {
-    const { isDark, onDarkModeToggled } = props;
     const { attractions } = props;
     const { selectedIndex, onIndexSelected } = props;
 
+    // Grab the ref for causing random spins
     const listRef = React.useRef<FixedSizeList>(null);
+
+    // Grab window size for confetti and list sizing
     const { width, height } = useWindowSize();
+
+    // Spinning is purely animation only
     const { spin, onSpin } = useSpin(listRef, attractions, onIndexSelected);
 
-    const Column = React.useCallback(
-      (listProps: { index: number; style: object }) => {
-        const { style, index } = listProps;
-        return (
-          <Box style={style}>
-            <Stack direction="column" width="100%" height="100%" px={2}>
-              <RideCard
-                spin={spin}
-                glow={selectedIndex === index}
-                attraction={attractions[index % attractions.length]}
-              />
-            </Stack>
-          </Box>
-        );
-      },
-      [attractions, selectedIndex, spin]
-    );
+    const [rain, setRain] = React.useState(false);
+    const handleConfettiComplete = React.useCallback(() => {
+      if (selectedIndex < 0) {
+        setRain(false);
+      }
+    }, [selectedIndex]);
+
+    React.useEffect(() => {
+      if (selectedIndex >= 0) {
+        setRain(true);
+      }
+    }, [selectedIndex, setRain]);
 
     return (
-      <Stack direction="column" width="100%" height="100%" sx={OVERFLOW_ONLY_Y}>
-        <AppBar position="sticky" elevation={0} sx={APP_BAR}>
-          <Toolbar>
-            <Box my="auto" pl={2}>
-              <Typography variant="body1" color="text.primary" fontWeight={700}>
-                Ride Roulette
-              </Typography>
-            </Box>
+      <Box width="100%" height="100%" overflow="hidden" position="relative">
+        <ReactConfetti
+          run={rain}
+          recycle={selectedIndex >= 0}
+          width={width}
+          height={height}
+          gravity={0.3}
+          onConfettiComplete={handleConfettiComplete}
+        />
 
-            <Box flexGrow={1} />
-
-            <Box my="auto">
-              <IconButton onClick={onDarkModeToggled}>
-                {isDark ? <DarkMode /> : <LightMode />}
-              </IconButton>
-            </Box>
-          </Toolbar>
-          <Divider orientation="horizontal" light={true} />
-        </AppBar>
-
-        <Box width="100%">
-          {attractions.length > 0 ? (
-            <FixedSizeList
-              ref={listRef}
-              className="no-visual-scrollbar"
-              layout="horizontal"
-              itemSize={Math.min(width, CARD_SIZE)}
-              height={CARD_SIZE}
-              itemCount={attractions.length}
-              width={width}
-            >
-              {Column}
-            </FixedSizeList>
-          ) : (
-            <Stack direction="column" width={width} height={height / 2}>
-              <Box m="auto" p={2}>
-                <Typography variant="h6" color="text.secondary">
-                  No rides to pick from, please select a park
-                </Typography>
-              </Box>
-            </Stack>
-          )}
-        </Box>
-        <ActionSection {...props} spin={spin} onSpin={onSpin} />
-      </Stack>
+        <Stack
+          direction="column"
+          width="100%"
+          height="100%"
+          sx={OVERFLOW_ONLY_Y}
+        >
+          <TopBar {...props} />
+          <ListSection
+            {...props}
+            spin={spin}
+            width={width}
+            height={height}
+            listRef={listRef}
+          />
+          <ActionSection {...props} spin={spin} onSpin={onSpin} />
+        </Stack>
+      </Box>
     );
   };
+
+const TopBar: React.FunctionComponent<RouletteState> = function (props) {
+  const { isDark, onDarkModeToggled } = props;
+  return (
+    <AppBar position="sticky" elevation={0} sx={APP_BAR}>
+      <Toolbar>
+        <Box my="auto" pl={2}>
+          <Typography variant="body1" color="text.primary" fontWeight={700}>
+            Ride Roulette
+          </Typography>
+        </Box>
+
+        <Box flexGrow={1} />
+
+        <Box my="auto">
+          <IconButton onClick={onDarkModeToggled}>
+            {isDark ? <DarkMode /> : <LightMode />}
+          </IconButton>
+        </Box>
+      </Toolbar>
+      <Divider orientation="horizontal" light={true} />
+    </AppBar>
+  );
+};
+
+const ListSection: React.FunctionComponent<
+  RouletteState & {
+    spin: boolean;
+    width: number;
+    height: number;
+    listRef: RefObject<FixedSizeList>;
+  }
+> = function (props) {
+  const { spin } = props;
+  const { listRef } = props;
+  const { width, height } = props;
+  const { selectedIndex, attractions } = props;
+
+  const Column = React.useCallback(
+    (listProps: { index: number; style: object }) => {
+      const { style, index } = listProps;
+      return (
+        <Box style={style}>
+          <Stack direction="column" width="100%" height="100%" px={2}>
+            <RideCard
+              spin={spin}
+              glow={selectedIndex === index}
+              attraction={attractions[index % attractions.length]}
+            />
+          </Stack>
+        </Box>
+      );
+    },
+    [attractions, selectedIndex, spin]
+  );
+
+  return (
+    <Box width="100%">
+      {attractions.length > 0 ? (
+        <FixedSizeList
+          ref={listRef}
+          className="no-visual-scrollbar"
+          layout="horizontal"
+          itemSize={Math.min(width, CARD_SIZE)}
+          height={CARD_SIZE}
+          itemCount={attractions.length}
+          width={width}
+        >
+          {Column}
+        </FixedSizeList>
+      ) : (
+        <Stack direction="column" width={width} height={height / 2}>
+          <Box m="auto" p={2}>
+            <Typography variant="h6" color="text.secondary">
+              No rides to pick from, please select a park
+            </Typography>
+          </Box>
+        </Stack>
+      )}
+    </Box>
+  );
+};
 
 const ActionSection: React.FunctionComponent<
   RouletteState & { spin: boolean; onSpin: () => void }
