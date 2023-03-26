@@ -15,7 +15,6 @@
  */
 
 import { AppEnvironment } from "../environment";
-import { AxiosError } from "axios";
 
 export interface Logger {
   objectType: "Logger";
@@ -48,8 +47,7 @@ export const newLogger = function (tag: string): Logger {
     e: function (err: any, ...args: any) {
       if (AppEnvironment.IS_DEV) {
         if (err.code && err.stack && err.name === "AxiosError") {
-          const e = err as AxiosError;
-          const { stack, ...rest } = e;
+          const { stack, ...rest } = err;
           console.error(appTag, myTag, stack, ...args, rest);
         } else {
           console.error(appTag, myTag, err, ...args);

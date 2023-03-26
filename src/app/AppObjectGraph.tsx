@@ -15,17 +15,13 @@
  */
 
 import { ObjectGraph } from "../arch/ObjectGraph";
-import { createDisneylandHttp } from "../http/DisneylandApiClient";
-import { createAxiosHttp } from "../http/AxiosHttpClient";
 import { createDisneylandInteractor } from "../pages/roulette/RealDisneylandInteractor";
 
-export const createAppObjectGraph = function (props: {}): ObjectGraph {
-  const http = createAxiosHttp();
-  const disneyApi = createDisneylandHttp({ http });
+export const createAppObjectGraph = function (): ObjectGraph {
   return {
     objectType: "ObjectGraph",
     interactors: {
-      disneyland: createDisneylandInteractor({ http: disneyApi }),
+      disneyland: createDisneylandInteractor(),
     },
   };
 };

@@ -37,7 +37,7 @@ const initReact = function (props: {
 };
 
 const main = function () {
-  const graph = createAppObjectGraph({});
+  const graph = createAppObjectGraph();
   const storage = createAppStorage();
 
   initReact({ graph, storage });

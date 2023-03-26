@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { HttpClient } from "../../http/HttpClient";
 import { DisneylandInteractor } from "./DisneylandInteractor";
 import { Attraction } from "./model/Attraction";
 import { getHardcodedParks } from "./DisneyAttractions";
@@ -36,9 +35,7 @@ const shuffle = function <T>(array: T[]) {
   }
 };
 
-export const createDisneylandInteractor = function (props: {
-  http: HttpClient;
-}): DisneylandInteractor {
+export const createDisneylandInteractor = function (): DisneylandInteractor {
   return {
     objectType: "DisneylandInteractor",
 
