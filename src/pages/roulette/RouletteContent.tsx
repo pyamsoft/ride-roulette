@@ -176,18 +176,18 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
     }, [selectedIndex, setRain]);
 
     React.useEffect(() => {
-      if (!rain) {
+      if (selectedIndex >= 0) {
         return;
       }
 
       const timer = window.setTimeout(() => {
-        setRain(false);
+        onIndexSelected(-1);
       }, 10000);
 
       return () => {
         window.clearTimeout(timer);
       };
-    }, [rain, setRain]);
+    }, [selectedIndex, onIndexSelected]);
 
     return (
       <Box width="100%" height="100%" overflow="hidden" position="relative">
