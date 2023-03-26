@@ -22,6 +22,7 @@ import {
   Button,
   Card,
   Checkbox,
+  Divider,
   FormControlLabel,
   IconButton,
   ListItemButton,
@@ -52,7 +53,7 @@ const useSpin = function (
 
   const handleScrollToRandomPosition = React.useCallback(
     (final: boolean) => {
-      const i = Math.random() * attractions.length * 4;
+      const i = Math.random() * attractions.length;
       // Fast convert this floating point into an int without floor()
       const index = ~~i;
       if (index >= 0) {
@@ -125,17 +126,23 @@ const LABEL_PROPS = {
 
 const CARD_SIZE = 400;
 
+const OVERFLOW_ONLY_Y = {
+  overflowX: "hidden",
+  overflowY: "auto",
+};
+
+const APP_BAR = {
+  backgroundColor: "background.default",
+};
+
 export const RouletteContent: React.FunctionComponent<RouletteState> =
   function (props) {
     const { isDark, onDarkModeToggled } = props;
     const { attractions } = props;
-    const { includeDisney, onToggleDisney } = props;
-    const { includeCA, onToggleCA } = props;
-    const { includeDTD, onToggleDTD } = props;
     const { selectedIndex, onIndexSelected } = props;
 
-    const { width, height } = useWindowSize();
     const listRef = React.useRef<FixedSizeList>(null);
+    const { width, height } = useWindowSize();
     const { spin, onSpin } = useSpin(listRef, attractions, onIndexSelected);
 
     const Column = React.useCallback(
@@ -156,14 +163,9 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
       [attractions, selectedIndex, spin]
     );
 
-    const infiniteListSize = React.useMemo(
-      () => attractions.length * 4,
-      [attractions]
-    );
-
     return (
-      <Stack direction="column" width="100%" height="100%" overflow="hidden">
-        <AppBar position="sticky" color="transparent" elevation={0}>
+      <Stack direction="column" width="100%" height="100%" sx={OVERFLOW_ONLY_Y}>
+        <AppBar position="sticky" elevation={0} sx={APP_BAR}>
           <Toolbar>
             <Box my="auto" pl={2}>
               <Typography variant="body1" color="text.primary" fontWeight={700}>
@@ -179,6 +181,7 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
               </IconButton>
             </Box>
           </Toolbar>
+          <Divider orientation="horizontal" light={true} />
         </AppBar>
 
         <Box width="100%">
@@ -188,8 +191,8 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
               className="no-visual-scrollbar"
               layout="horizontal"
               itemSize={Math.min(width, CARD_SIZE)}
-              height={Math.min(CARD_SIZE, (height * 3) / 5)}
-              itemCount={infiniteListSize}
+              height={CARD_SIZE}
+              itemCount={attractions.length}
               width={width}
             >
               {Column}
@@ -204,63 +207,70 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
             </Stack>
           )}
         </Box>
-        <Stack
-          direction="column"
-          mt="auto"
-          mx="auto"
-          px={2}
-          pb={2}
-          width={`min(100%, ${CARD_SIZE}px)`}
-        >
-          <Stack direction="row" justifyContent="center" pb={2}>
-            <FormControlLabel
-              componentsProps={LABEL_PROPS}
-              disabled={spin}
-              onChange={spin ? undefined : onToggleDisney}
-              control={<Checkbox checked={includeDisney} />}
-              label="Disneyland"
-            />
-
-            <FormControlLabel
-              componentsProps={LABEL_PROPS}
-              disabled={spin}
-              onChange={spin ? undefined : onToggleCA}
-              control={<Checkbox checked={includeCA} />}
-              label="California Adventure"
-            />
-
-            <FormControlLabel
-              componentsProps={LABEL_PROPS}
-              disabled={spin}
-              onChange={spin ? undefined : onToggleDTD}
-              control={<Checkbox checked={includeDTD} />}
-              label="Downtown Disney"
-            />
-          </Stack>
-          <Button
-            variant="contained"
-            fullWidth={true}
-            onClick={onSpin}
-            disabled={spin}
-          >
-            {spin ? "Spinning..." : "Spin!"}
-          </Button>
-
-          <Box mx="auto">
-            <Typography
-              variant="caption"
-              textAlign="center"
-              color="text.secondary"
-            >
-              This Application is not affiliated with Disney company. All
-              product names, logos, and brands are property of their respective
-              owners.
-            </Typography>
-          </Box>
-        </Stack>
+        <ActionSection {...props} spin={spin} onSpin={onSpin} />
       </Stack>
     );
   };
+
+const ActionSection: React.FunctionComponent<
+  RouletteState & { spin: boolean; onSpin: () => void }
+> = function (props) {
+  const { includeDisney, onToggleDisney } = props;
+  const { includeCA, onToggleCA } = props;
+  const { includeDTD, onToggleDTD } = props;
+  const { spin, onSpin } = props;
+  return (
+    <Stack
+      direction="column"
+      mt="auto"
+      mx="auto"
+      px={2}
+      pb={2}
+      width={`min(100%, 600px)`}
+    >
+      <Stack direction="row" justifyContent="center" pb={2}>
+        <FormControlLabel
+          componentsProps={LABEL_PROPS}
+          disabled={spin}
+          onChange={spin ? undefined : onToggleDisney}
+          control={<Checkbox checked={includeDisney} />}
+          label="Disneyland"
+        />
+
+        <FormControlLabel
+          componentsProps={LABEL_PROPS}
+          disabled={spin}
+          onChange={spin ? undefined : onToggleCA}
+          control={<Checkbox checked={includeCA} />}
+          label="California Adventure"
+        />
+
+        <FormControlLabel
+          componentsProps={LABEL_PROPS}
+          disabled={spin}
+          onChange={spin ? undefined : onToggleDTD}
+          control={<Checkbox checked={includeDTD} />}
+          label="Downtown Disney"
+        />
+      </Stack>
+      <Button
+        variant="contained"
+        fullWidth={true}
+        onClick={onSpin}
+        disabled={spin}
+      >
+        {spin ? "Spinning..." : "Spin!"}
+      </Button>
+
+      <Box mx="auto">
+        <Typography variant="caption" textAlign="center" color="text.secondary">
+          This Application is not affiliated with Disney company. All product
+          names, logos, and brands are property of their respective owners.
+        </Typography>
+      </Box>
+    </Stack>
+  );
+};
 
 const useParkToName = function (park: ThemePark): string {
   return React.useMemo(() => {
