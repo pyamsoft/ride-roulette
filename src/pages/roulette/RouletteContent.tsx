@@ -163,11 +163,6 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
     const { spin, onSpin } = useSpin(listRef, attractions, onIndexSelected);
 
     const [rain, setRain] = React.useState(false);
-    const handleConfettiComplete = React.useCallback(() => {
-      if (selectedIndex < 0) {
-        setRain(false);
-      }
-    }, [selectedIndex]);
 
     React.useEffect(() => {
       if (selectedIndex >= 0) {
@@ -181,23 +176,21 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
       }
 
       const timer = window.setTimeout(() => {
-        onIndexSelected(-1);
+        setRain(false);
       }, 10000);
 
       return () => {
         window.clearTimeout(timer);
       };
-    }, [selectedIndex, onIndexSelected]);
+    }, [selectedIndex, setRain]);
 
     return (
       <Box width="100%" height="100%" overflow="hidden" position="relative">
         <ReactConfetti
-          run={rain}
-          recycle={selectedIndex >= 0}
+          recycle={rain}
           width={width}
           height={height}
-          gravity={0.3}
-          onConfettiComplete={handleConfettiComplete}
+          run={selectedIndex >= 0}
         />
 
         <Stack
