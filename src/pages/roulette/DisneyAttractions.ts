@@ -112,7 +112,7 @@ export const getHardcodedParks = function (props: {
   includeEntertainment: boolean;
 }): Attraction[] {
   // Future: We want to use the date to filter out seasonal attractions like Halloween and Christmas rides.
-  const { date, includeEntertainment } = props;
+  const { includeEntertainment } = props;
 
   let at = [
     createDLRNewAttraction({
