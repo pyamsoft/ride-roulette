@@ -19,11 +19,11 @@ import { AppEnvironment } from "../environment";
 export interface Logger {
   objectType: "Logger";
 
-  d: (...args: any) => void;
+  d: (...args: unknown[]) => void;
 
-  w: (...args: any) => void;
+  w: (...args: unknown[]) => void;
 
-  e: (...args: any) => void;
+  e: (...args: unknown[]) => void;
 }
 
 export const newLogger = function (tag: string): Logger {
@@ -32,25 +32,27 @@ export const newLogger = function (tag: string): Logger {
   return {
     objectType: "Logger",
 
-    d: function (...args: any) {
+    d: function (...args: unknown[]) {
       if (AppEnvironment.IS_DEV) {
         console.log(appTag, myTag, ...args);
       }
     },
 
-    w: function (...args: any) {
+    w: function (...args: unknown[]) {
       if (AppEnvironment.IS_DEV) {
         console.warn(appTag, myTag, ...args);
       }
     },
 
-    e: function (err: any, ...args: any) {
+    e: function (err: unknown, ...args: unknown[]) {
       if (AppEnvironment.IS_DEV) {
-        if (err.code && err.stack && err.name === "AxiosError") {
-          const { stack, ...rest } = err;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const e = err as any;
+        if (e.code && e.stack && e.name === "AxiosError") {
+          const { stack, ...rest } = e;
           console.error(appTag, myTag, stack, ...args, rest);
         } else {
-          console.error(appTag, myTag, err, ...args);
+          console.error(appTag, myTag, e, ...args);
         }
       }
     },

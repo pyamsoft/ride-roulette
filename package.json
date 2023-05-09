@@ -15,9 +15,12 @@
   },
   "scripts": {
     "start": "vite",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "build": "rm -rf dist && tsc && vite build",
-    "preview": "yarn build && vite preview",
+    "build": "yarn lint && tsc && vite build",
+    "lint": "yarn eslint && yarn stylelint",
+    "eslint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "stylelint": "stylelint 'src/**/*.css'",
+    "just-preview": "vite preview",
+    "preview": "yarn build && yarn just-preview",
     "deploy": "yarn build && firebase deploy"
   },
   "devDependencies": {
@@ -36,8 +39,11 @@
     "firebase-tools": "11.25.2",
     "npm-check-updates": "16.10.0",
     "prettier": "2.8.7",
+    "stylelint": "15.6.1",
+    "stylelint-config-standard": "33.0.0",
     "typescript": "5.0.3",
     "vite": "4.3.5",
+    "vite-plugin-checker": "0.6.0",
     "web-vitals": "3.3.0"
   }
 }

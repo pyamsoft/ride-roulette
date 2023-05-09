@@ -17,19 +17,28 @@
 export interface HttpClient {
   objectType: "HttpClient";
 
-  get: <T = any>(
+  get: <
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    T = any
+  >(
     url: string,
     params?: URLSearchParams,
     headers?: object
   ) => Promise<HttpResponse<T>>;
 
-  post: <T = any>(
+  post: <
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    T = any
+  >(
     url: string,
     body?: object,
     headers?: object
   ) => Promise<HttpResponse<T>>;
 
-  put: <T = any>(
+  put: <
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    T = any
+  >(
     url: string,
     body?: object,
     headers?: object
@@ -44,6 +53,8 @@ export interface HttpResponse<T = StandardHttpResponseData> {
   statusText: string;
   headers: object;
   requestUrl: string;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   requestBody: any;
 }
 

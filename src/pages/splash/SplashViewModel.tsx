@@ -22,9 +22,9 @@ interface Shared {
   onDone: () => void;
 }
 
-export interface SplashProps extends Shared {}
+export type SplashProps = Shared;
 
-export interface SplashState extends Shared {}
+export type SplashState = Shared;
 
 export const SplashViewModel: React.FunctionComponent<
   ViewModelProps<SplashProps, SplashState>

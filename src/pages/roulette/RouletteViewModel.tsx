@@ -25,7 +25,7 @@ interface Shared {
   attractions: Attraction[];
 }
 
-export interface RouletteProps extends Shared {}
+export type RouletteProps = Shared;
 
 export interface RouletteState extends Shared {
   includeDisney: boolean;

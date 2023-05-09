@@ -16,8 +16,8 @@
 
 import React from "react";
 
-export type ViewModelChildren<T = {}> = (props: T) => React.ReactElement;
+export type ViewModelChildren<T = object> = (props: T) => React.ReactElement;
 
-export type ViewModelProps<P = {}, S = {}> = P & {
+export type ViewModelProps<P = object, S = object> = P & {
   children: ViewModelChildren<S>;
 };

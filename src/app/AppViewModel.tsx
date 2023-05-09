@@ -28,7 +28,7 @@ interface Shared {
   storage: AppStorage;
 }
 
-export interface AppProps extends Shared {}
+export type AppProps = Shared
 
 export interface AppState extends Shared {
   // splash
@@ -69,10 +69,10 @@ const useParks = function (graph: ObjectGraph) {
         logger.d("DISNEY: ", res);
         setAttractions(res);
         setAttractionsError(undefined);
-      } catch (e: any) {
+      } catch (e) {
         logger.e(e, "Error loading Disneyland attractions");
         setAttractions([]);
-        setAttractionsError(e);
+        setAttractionsError(e as Error);
       }
     });
   }, [disneyland, setAttractions, setAttractionsError]);

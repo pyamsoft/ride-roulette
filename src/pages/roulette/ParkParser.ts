@@ -48,20 +48,25 @@ const rideString = function (r: P): string {
  */
 export const TEST_PARSE_RIDE_JSON = function (rideJson: string) {
   const j = JSON.parse(rideJson);
-  const rides: P[] = j.results.map((r: any) => {
-    return {
-      id: r.id,
-      url: r.urlFriendlyId,
-      name: r.name,
-      imageUrl: r.media ? r.media.finderStandardThumb.url : "",
-      park:
-        r.locationName === "Disneyland Park"
-          ? ThemePark.DISNEYLAND
-          : r.locationName === "Disney California Adventure Park"
-          ? ThemePark.CALIFORNIA_ADVENTURE
-          : ThemePark.DOWNTOWN_DISNEY,
-    };
-  });
+  const rides: P[] = j.results.map(
+    (
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      r: any
+    ) => {
+      return {
+        id: r.id,
+        url: r.urlFriendlyId,
+        name: r.name,
+        imageUrl: r.media ? r.media.finderStandardThumb.url : "",
+        park:
+          r.locationName === "Disneyland Park"
+            ? ThemePark.DISNEYLAND
+            : r.locationName === "Disney California Adventure Park"
+            ? ThemePark.CALIFORNIA_ADVENTURE
+            : ThemePark.DOWNTOWN_DISNEY,
+      };
+    }
+  );
 
   console.log(
     `${rides

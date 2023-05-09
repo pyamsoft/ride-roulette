@@ -22,15 +22,19 @@ body {
 
 @keyframes selected-border {
   from {
+    /* stylelint-disable comment-empty-line-before */
     /** This var is undefined in CS but is injected at runtime in AppContext */
-    /*noinspection CssUnresolvedCustomProperty*/
+    /* noinspection CssUnresolvedCustomProperty */
     border-color: var(--color-background-default);
+    /* stylelint-enable comment-empty-line-before */
   }
 
   to {
+    /* stylelint-disable comment-empty-line-before */
     /** This var is undefined in CS but is injected at runtime in AppContext */
-    /*noinspection CssUnresolvedCustomProperty*/
+    /* noinspection CssUnresolvedCustomProperty */
     border-color: var(--color-primary-main);
+    /* stylelint-enable comment-empty-line-before */
   }
 }
 
@@ -43,6 +47,7 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 .no-visual-scrollbar ::-webkit-scrollbar {
   background: transparent;
   width: 0;

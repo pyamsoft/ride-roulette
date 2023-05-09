@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import packageJson from "./package.json";
+
 import { defineConfig, splitVendorChunkPlugin, UserConfigExport } from "vite";
+import checker from "vite-plugin-checker";
 import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
@@ -25,43 +30,58 @@ export default defineConfig(({ command, mode }) => {
 
   const isProduction = mode === "production";
 
-  if (command === "build") {
-    return {
-      ...baseConfig,
-      build: {
-        target: "es2015",
-        sourcemap: true,
-        minify: isProduction,
-        cssMinify: true,
-        rollupOptions: {
-          output: {
-            manualChunks: (path: string) => {
-              if (path.includes("/node_modules")) {
-                if (path.includes("@mui")) {
-                  if (path.includes("icons-material")) {
-                    return "vendor_mui_icons_material";
-                  } else {
-                    return "vendor_mui";
-                  }
+  if (!isProduction) {
+    baseConfig.plugins = [
+      ...baseConfig.plugins,
+      checker({
+        typescript: true,
+        eslint: {
+          lintCommand: packageJson.scripts.eslint,
+        },
+        stylelint: {
+          lintCommand: packageJson.scripts.stylelint,
+        },
+      }),
+    ];
+  }
+
+  return {
+    ...baseConfig,
+    build: {
+      sourcemap: isProduction,
+      minify: isProduction,
+      cssMinify: isProduction,
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            // Split up the JS code into chunks
+            if (id.includes("/node_modules")) {
+              // mui can be its own chunk, split further into mini-chunks
+              if (id.includes("@mui")) {
+                if (id.includes("@mui/x-date-pickers")) {
+                  return "vendor_mui_x_date_pickers";
+                } else if (id.includes("@mui/icons-material")) {
+                  return "vendor_mui_icons_material";
                 }
-
-                return "vendor";
+                return "vendor_mui";
               }
+            }
 
-              // Fallback to split chunk plugin
-              return undefined;
-            },
+            // Otherwise we fall back to the splitVendorChunkPlugin, which
+            // also handles our src code splitting
+            return undefined;
           },
         },
       },
-    };
-  } else {
-    return {
-      ...baseConfig,
-      server: {
-        port: 3000,
-        strictPort: true,
-      },
-    };
-  }
+    },
+
+    server:
+      command === "serve"
+        ? {
+            // For compat with CRA and our existing internal tools
+            port: 3000,
+            strictPort: true,
+          }
+        : undefined,
+  };
 });

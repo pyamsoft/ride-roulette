@@ -15,13 +15,13 @@
  */
 
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { App } from "./app/App";
 import { ObjectGraph } from "./arch/ObjectGraph";
 import { createAppObjectGraph } from "./app/AppObjectGraph";
 import { AppStorage } from "./arch/AppStorage";
 import { createAppStorage } from "./app/AppLocalStorage";
+import "./index.css";
 
 const initReact = function (props: {
   graph: ObjectGraph;
