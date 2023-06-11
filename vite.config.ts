@@ -16,7 +16,7 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import packageJson from "./package.json";
+import { scripts } from "./package.json";
 
 import { defineConfig, splitVendorChunkPlugin, UserConfigExport } from "vite";
 import checker from "vite-plugin-checker";
@@ -36,10 +36,10 @@ export default defineConfig(({ command, mode }) => {
       checker({
         typescript: true,
         eslint: {
-          lintCommand: packageJson.scripts.eslint,
+          lintCommand: scripts.eslint,
         },
         stylelint: {
-          lintCommand: packageJson.scripts.stylelint,
+          lintCommand: scripts.stylelint,
         },
       }),
     ];
@@ -74,14 +74,5 @@ export default defineConfig(({ command, mode }) => {
         },
       },
     },
-
-    server:
-      command === "serve"
-        ? {
-            // For compat with CRA and our existing internal tools
-            port: 3000,
-            strictPort: true,
-          }
-        : undefined,
   };
 });

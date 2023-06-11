@@ -130,13 +130,6 @@ export const getHardcodedParks = function (props: {
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disneyland/peter-pans-flight/peter-pan-flight-00.jpg?1677892407583",
     }),
     createDLRNewAttraction({
-      id: "353437;entityType=Attraction",
-      name: "Splash Mountain",
-      url: "splash-mountain",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disneyland/splash-mountain/splash-mountain-00.jpg?1677892649652",
-    }),
-    createDLRNewAttraction({
       id: "17734741;entityType=Attraction",
       name: "The Disney Gallery",
       url: "disney-gallery",
@@ -149,13 +142,6 @@ export const getHardcodedParks = function (props: {
       url: "many-adventures-of-winnie-the-pooh",
       imageUrl:
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disneyland/many-adventures-of-winnie-the-pooh/many-adventures-of-winnie-the-pooh-00.jpg?1640818282331",
-    }),
-    createDLRNewAttraction({
-      id: "18249927;entityType=Attraction",
-      name: "Haunted Mansion Holiday",
-      url: "haunted-mansion-holiday",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disneyland/haunted-mansion-holiday/haunted-mansion-holiday-00.jpg?1676045437070",
     }),
     createDLRNewAttraction({
       id: "411848232;entityType=Attraction",
@@ -222,7 +208,7 @@ export const getHardcodedParks = function (props: {
     }),
     createDLRNewAttraction({
       id: "367492;entityType=Attraction",
-      name: '"it\'s a small world"',
+      name: `"it's a small world"`,
       url: "its-a-small-world",
       imageUrl:
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/disneyland/attractions/disneyland/its-a-small-world/small-world-exterior-16x9.jpg?1674230761751",
@@ -303,13 +289,6 @@ export const getHardcodedParks = function (props: {
       url: "star-wars-rise-of-the-resistance",
       imageUrl:
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/disneyland/attractions/disneyland/star-wars-rise-of-the-resistance/rise-of-the-resisstance-interior-16x9.jpg?1678754724200",
-    }),
-    createDLRNewAttraction({
-      id: "353445;entityType=Attraction",
-      name: "Tarzan's Treehouse™",
-      url: "tarzans-treehouse",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disneyland/tarzans-treehouse/tarzans-treehouse-00.jpg?1668113165118",
     }),
     createDLRNewAttraction({
       id: "353429;entityType=Attraction",
@@ -410,13 +389,6 @@ export const getHardcodedParks = function (props: {
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disneyland/storybook-land-canal-boats/storybook-land-canal-boats-00.jpg?1677892701472",
     }),
     createDLRNewAttraction({
-      id: "18237368;entityType=Attraction",
-      name: "Hyperspace Mountain - Returning May 1, 2023",
-      url: "hyperspace-mountain",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disneyland/hyperspace-mountain/hyperspace-mountain-02.jpg?1679362099046",
-    }),
-    createDLRNewAttraction({
       id: "393385;entityType=Attraction",
       name: "Main Street Vehicles",
       url: "main-street-vehicles",
@@ -494,13 +466,6 @@ export const getHardcodedParks = function (props: {
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disneyland/star-wars-launch-bay/star-wars-launch-bay-03.jpg?1677892660579",
     }),
     createDLRNewAttraction({
-      id: "18237232;entityType=Attraction",
-      name: '"it\'s a small world" Holiday',
-      url: "its-a-small-world-holiday",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disneyland/its-a-small-world-holiday/its-a-small-world-holiday-bright-16x9.jpg?1674230766305",
-    }),
-    createDLRNewAttraction({
       id: "353435;entityType=Attraction",
       name: "Space Mountain",
       url: "space-mountain",
@@ -539,20 +504,6 @@ export const getHardcodedParks = function (props: {
         url: "magic-happens-parade",
         imageUrl:
           "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/disneyland/entertainment/disneyland/magic-happens-parade/magic-happens-parade-mickey-moana-16x9.jpg?1677254687896",
-      }),
-      createDLRNewEntertainment({
-        id: "424945;entityType=Entertainment",
-        name: '"Believe...In Holiday Magic" Fireworks Spectacular',
-        url: "believe-in-holiday-magic-fireworks",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/disneyland/entertainment/disneyland/believe-in-holiday-magic-fireworks/holiday-magic-fireworks-16x9.jpg?1673249868808",
-      }),
-      createDLRNewEntertainment({
-        id: "17552793;entityType=Entertainment",
-        name: "Halloween Screams",
-        url: "halloween-screams",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/disneyland/entertainment/disneyland/halloween-screams/halloween-screams-render-16x9.jpg?1667288662459",
       }),
       createDLRNewEntertainment({
         id: "18738682;entityType=Entertainment",
@@ -597,13 +548,6 @@ export const getHardcodedParks = function (props: {
           "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/entertainment/disneyland/dapper-dans/dapper-dans-00.jpg?1676325413622",
       }),
       createDLRNewEntertainment({
-        id: "3908469;entityType=Entertainment",
-        name: "A Christmas Fantasy Parade",
-        url: "christmas-fantasy-parade",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/disneyland/entertainment/disneyland/christmas-fantasy-parade/christmas-fantasy-parade-soilders-16x9.jpg?1673250001140",
-      }),
-      createDLRNewEntertainment({
         id: "19193436;entityType=Entertainment",
         name: "Mickey's Mix Magic",
         url: "mickeys-mix-magic",
@@ -612,7 +556,7 @@ export const getHardcodedParks = function (props: {
       }),
       createDLRNewEntertainment({
         id: "411647074;entityType=Entertainment",
-        name: '"it\'s a small world" Encanto Projection',
+        name: `"it's a small world" Encanto Projection`,
         url: "its-a-small-world-encanto-projection",
         imageUrl:
           "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/entertainment/its-a-small-world-encanto/040122CT2MB-02154b-16x9.jpg?2022-04-01T20:55:32+00:00",
@@ -624,39 +568,11 @@ export const getHardcodedParks = function (props: {
         imageUrl:
           "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/entertainment/see-tinker-bell-in-pixie-hollow/tinkerbell-pixie-hallow-16x9.jpg?2022-02-28T22:33:19+00:00",
       }),
-      createDLRNewEntertainment({
-        id: "18299866;entityType=Entertainment",
-        name: "Disney® Visa® Cardmember Star Wars Photo Opportunity",
-        url: "visa-card-star-wars-character-experience",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/attractions/launch-bay/star-wars-launch-bay-sign-16x9.jpg?2021-04-26T20:46:29+00:00",
-      }),
-      createDLRNewEntertainment({
-        id: "15756384;entityType=Entertainment",
-        name: "Wintertime Enchantment at Sleeping Beauty's Winter Castle",
-        url: "wintertime-enchantment-sleeping-beauty-castle",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/entertainment/disneyland/wintertime-enchantment-sleeping-beauty-castle/wintertime-enchantment-castle-hero-16x9.jpg?1673250233932",
-      }),
-      createDLRNewEntertainment({
-        id: "18847498;entityType=Entertainment",
-        name: '"it\'s a small world" Holiday Lighting',
-        url: "its-a-small-world-holiday-lighting",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/entertainment/disneyland/its-a-small-world-holiday-lighting/wintertime-enchantment-small-world-16x9.jpg?1673250535117",
-      }),
     ];
   }
 
   at = [
     ...at,
-    createCANewAttraction({
-      id: "18848246;entityType=Attraction",
-      name: "Luigi's Joy to the Whirl",
-      url: "luigis-joy-whirl",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/luigis-joy-whirl/radiator-spring-street-16x9.jpg?1673249486705",
-    }),
     createCANewAttraction({
       id: "16581435;entityType=Attraction",
       name: "Red Car Trolley",
@@ -721,13 +637,6 @@ export const getHardcodedParks = function (props: {
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/soarin-over-the-world/soarin-over-the-world-00.jpg?1677825624916",
     }),
     createCANewAttraction({
-      id: "18755618;entityType=Attraction",
-      name: "Halloween Time Décor at Disney California Adventure Park",
-      url: "california-adventure-holiday-decorations",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/events/halloween/halloween-time-spooky-touches-16x9.jpg?2022-06-10T16:21:10+00:00",
-    }),
-    createCANewAttraction({
       id: "353447;entityType=Attraction",
       name: "The Bakery Tour",
       url: "bakery-tour",
@@ -756,32 +665,11 @@ export const getHardcodedParks = function (props: {
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/grizzly-river-run/grizzly-river-run-00.jpg?1679064758823",
     }),
     createCANewAttraction({
-      id: "18848247;entityType=Attraction",
-      name: "Mater's Jingle Jamboree",
-      url: "maters-jingle-jamboree",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/maters-jingle-jamboree/mater-tow-santa-hat-16x9.jpg?1673249476402",
-    }),
-    createCANewAttraction({
       id: "353289;entityType=Attraction",
       name: "Animation Academy",
       url: "animation-academy",
       imageUrl:
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/animation-academy/animation-academy-00.jpg?1639108497977",
-    }),
-    createCANewAttraction({
-      id: "18774860;entityType=Attraction",
-      name: "Guardians of the Galaxy - Monsters After Dark",
-      url: "guardians-galaxy-mission-breakout-after-dark",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/guardians-galaxy-mission-breakout-after-dark/new-monsters-after-dark-16x9.jpg?1667288586193",
-    }),
-    createCANewAttraction({
-      id: "18752875;entityType=Attraction",
-      name: "Mater's Graveyard JamBOOree",
-      url: "maters-graveyard-jam-boo-ree",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/maters-graveyard-jam-boo-ree/Maters-graveyard-jambooree-16x9.jpg?1667288913755",
     }),
     createCANewAttraction({
       id: "19299875;entityType=Attraction",
@@ -861,13 +749,6 @@ export const getHardcodedParks = function (props: {
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/disneyland/destinations/disney-california-adventure/pixar-pier/pixar-pal-around-night-16x9.jpg?1677892461478",
     }),
     createCANewAttraction({
-      id: "18752877;entityType=Attraction",
-      name: "Luigi's Honkin' Haul-O-Ween",
-      url: "luigis-honkin-haul-o-ween",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/luigis-honkin-haul-o-ween/halloween-time-luigis-honkin-hauloween-16x9.jpg?1667288791739",
-    }),
-    createCANewAttraction({
       id: "15822029;entityType=Attraction",
       name: "Goofy's Sky School",
       url: "goofys-sky-school",
@@ -887,13 +768,6 @@ export const getHardcodedParks = function (props: {
       url: "walt-disney-imagineering-blue-sky-cellar",
       imageUrl:
         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/walt-disney-imagineering-blue-sky-cellar/walt-disney-imagineering-blue-sky-cellar-00.jpg?1677892713401",
-    }),
-    createCANewAttraction({
-      id: "19324604;entityType=Attraction",
-      name: "Soarin' Over California",
-      url: "soarin-over-california",
-      imageUrl:
-        "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/disney-california-adventure/soarin/soarin-over-california-00.jpg?1677825639774",
     }),
   ];
 
@@ -915,13 +789,6 @@ export const getHardcodedParks = function (props: {
           "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/entertainment/meet-greet/disney/dca-mikey-buena-vista-1-16x9.jpg?2022-04-27T17:48:47+00:00",
       }),
       createCANewEntertainment({
-        id: "18373589;entityType=Entertainment",
-        name: "Mulan's Lunar New Year Procession",
-        url: "mulans-lunar-new-year-procession",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/events/lunar-new-year/image002.jpg?2021-12-13T19:26:13+00:00",
-      }),
-      createCANewEntertainment({
         id: "19052131;entityType=Entertainment",
         name: "Meet Pixar Pals at Pixar Pier",
         url: "character-meet-pixar-pals-pixar-pier",
@@ -941,33 +808,6 @@ export const getHardcodedParks = function (props: {
         url: "disney-junior-dance-party",
         imageUrl:
           "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/disneyland/entertainment/disney-california-adventure/disney-junior-dance-party/vampirina-disney-jr-dance-party-16x9.jpg?1676052426118",
-      }),
-      createCANewEntertainment({
-        id: "411703982;entityType=Entertainment",
-        name: "Hollywood Backlot Stage",
-        url: "undefined",
-        imageUrl: "",
-      }),
-      createCANewEntertainment({
-        id: "422666;entityType=Entertainment",
-        name: "Disney® Visa® Cardmember Photo Opportunity",
-        url: "visa-card-character-experience",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/entertainment/meet-greet/disney/SCENARIO-2000x1334-16x9.jpg?2022-07-20T21:02:05+00:00",
-      }),
-      createCANewEntertainment({
-        id: "18382097;entityType=Entertainment",
-        name: "Culinary Demonstrations at Disney California Adventure Food & Wine Festival",
-        url: "food-wine-culinary-demonstrations",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/events/food-and-wine-festival/dining/0421ZO_2864GC_xak-16x9.jpg?2023-03-02T20:55:23+00:00",
-      }),
-      createCANewEntertainment({
-        id: "17595196;entityType=Entertainment",
-        name: "Disney ¡Viva Navidad! Street Party",
-        url: "viva-navidad-street-party",
-        imageUrl:
-          "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/events/holiday/0105ZV_1903TA-16x9.jpg?2021-08-27T23:38:01+00:00",
       }),
       createCANewEntertainment({
         id: "18691239;entityType=Entertainment",
@@ -1065,33 +905,6 @@ export const getHardcodedParks = function (props: {
       }),
     ];
   }
-
-  // TODO Can't place this, multiple locations
-  // createDTDNewAttraction({
-  //     id: "411884615;entityType=Attraction",
-  //     name: "Dazzling Interactions with MagicBand+",
-  //     url: "magicband-plus-dazzling-interactions",
-  //     imageUrl:
-  //         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/vision-dam/digital/parks-platform/parks-global-assets/disneyland/events/d100/hub/DTD-Medallion-16x9.jpg?2023-02-09T18:57:00+00:00",
-  // }),
-
-  // TODO Can't place this, multiple locations
-  // createDTDNewAttraction({
-  //     id: "18532806;entityType=Attraction",
-  //     name: "Holiday Décor",
-  //     url: "holiday-decorations",
-  //     imageUrl:
-  //         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/wdpro-assets/dlr/parks-and-tickets/attractions/holiday-decorations/sleeping-beauty-castle-holiday-16x9.jpg?1673250437065",
-  // }),
-
-  // TODO Can't place this, multiple locations
-  // createDLRNewEntertainment({
-  //     id: "18685751;entityType=Entertainment",
-  //     name: "Parades at the Disneyland Resort",
-  //     url: "parades",
-  //     imageUrl:
-  //         "https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/250/127/75/dam/disneyland/entertainment/disneyland/magic-happens-parade/magic-happens-parade-mickey-moana-16x9.jpg?1677254543332",
-  // }),
 
   return at;
 };

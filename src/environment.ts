@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import packageJson from "../package.json";
+import { version } from "../package.json";
 
 const DEV_URL = "TODO-GET-URL";
 
@@ -25,7 +25,7 @@ export const AppEnvironment = {
   IS_TEST_MODE: process.env.NODE_ENV === "test",
 
   APP_NAME: "Ride Roulette",
-  APP_VERSION: packageJson.version,
+  APP_VERSION: version,
 
   get IS_DEV() {
     const url = window.location.href;
