@@ -26,3 +26,4 @@ yarn-error.log*
 .idea
 .firebaserc
 .firebase
+.firebase-tools.json
