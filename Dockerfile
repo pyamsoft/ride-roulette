@@ -24,4 +24,4 @@ RUN mv ./.firebase-tools.json ${HOME}/.config/configstore/firebase-tools.json
 
 RUN yarn
 
-CMD [ "yarn", "run deploy" ]
+CMD [ "yarn", "run", "deploy" ]
