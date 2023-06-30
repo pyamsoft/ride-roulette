@@ -217,11 +217,20 @@ const useAttractions = function (
     typeIncludeSitEat,
   ]);
 
+  const attractionList = React.useMemo(() => {
+    // If the list isnt big enough for a nice animation, double it up
+    let result = filteredAttractions;
+    while (result.length <= 10) {
+      result = [...result, ...result];
+    }
+    return result;
+  }, [filteredAttractions]);
+
   return React.useMemo(() => {
     return {
-      rideList: filteredAttractions,
+      attractionList,
     };
-  }, [filteredAttractions]);
+  }, [attractionList]);
 };
 
 export const RouletteViewModel: React.FunctionComponent<
@@ -258,7 +267,7 @@ export const RouletteViewModel: React.FunctionComponent<
     onToggleTypeSitEat,
   } = useSelectors();
 
-  const { rideList } = useAttractions(
+  const { attractionList } = useAttractions(
     attractions,
     parkIncludeDisney,
     parkIncludeDCA,
@@ -294,7 +303,7 @@ export const RouletteViewModel: React.FunctionComponent<
       isDark,
       onDarkModeToggled,
 
-      attractions: rideList,
+      attractions: attractionList,
 
       selectedIndex: finalIndex,
       onIndexSelected: setFinalIndex,
@@ -327,7 +336,7 @@ export const RouletteViewModel: React.FunctionComponent<
     isDark,
     onDarkModeToggled,
 
-    rideList,
+    attractionList,
 
     finalIndex,
     setFinalIndex,

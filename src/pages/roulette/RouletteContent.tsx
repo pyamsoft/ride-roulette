@@ -53,7 +53,8 @@ const LABEL_PROPS = {
 /**
  * The max size of a card
  */
-const CARD_SIZE = 400;
+const CARD_WIDTH = 400;
+const CARD_HEIGHT = 342;
 
 /**
  * Only allow Y scrolling
@@ -308,8 +309,8 @@ const ListSection: React.FunctionComponent<
           ref={listRef}
           className="no-visual-scrollbar"
           layout="horizontal"
-          itemSize={Math.min(width, CARD_SIZE)}
-          height={CARD_SIZE}
+          itemSize={Math.min(width, CARD_WIDTH)}
+          height={CARD_HEIGHT}
           itemCount={attractions.length}
           width={width}
         >
@@ -382,7 +383,7 @@ const TypeSelectors: React.FunctionComponent<RouletteState & ActionProps> =
     return (
       <Stack direction="column" width="50%" height="100%">
         <Typography variant="body2" color="text.secondary" fontWeight={700}>
-          Content Type
+          Experiences
         </Typography>
         <FormControlLabel
           componentsProps={LABEL_PROPS}
