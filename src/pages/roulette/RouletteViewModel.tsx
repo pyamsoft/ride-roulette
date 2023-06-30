@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React from "react";
+import React, { Dispatch } from "react";
 import { ViewModelProps } from "../../arch/ViewModel";
 import { Attraction } from "./model/Attraction";
 import { ThemePark } from "./model/ThemePark";
@@ -28,80 +28,150 @@ interface Shared {
 export type RouletteProps = Shared;
 
 export interface RouletteState extends Shared {
-  includeDisney: boolean;
-  onToggleDisney: () => void;
-
-  includeCA: boolean;
-  onToggleCA: () => void;
-
-  includeDTD: boolean;
-  onToggleDTD: () => void;
-
   selectedIndex: number;
   onIndexSelected: (i: number) => void;
+
+  parkIncludeDisney: boolean;
+  onToggleParkIncludeDisney: () => void;
+
+  parkIncludeDCA: boolean;
+  onToggleParkIncludeDCA: () => void;
+
+  parkIncludeDTD: boolean;
+  onToggleParkIncludeDTD: () => void;
+
+  typeIncludeRides: boolean;
+  onToggleTypeIncludeRides: () => void;
+
+  typeIncludeShows: boolean;
+  onToggleTypeIncludeShows: () => void;
+
+  typeIncludeMeetGreet: boolean;
+  onToggleTypeIncludeMeetGreet: () => void;
+
+  typeIncludeQuickEat: boolean;
+  onToggleTypeIncludeQuickEat: () => void;
+
+  typeIncludeSitEat: boolean;
+  onToggleTypeIncludeSitEat: () => void;
 }
 
-const useAttractions = function (attractions: Attraction[]) {
-  const [includeDisney, setIncludeDisney] = React.useState(true);
-  const [includeCA, setIncludeCA] = React.useState(true);
-  const [includeDTD, setIncludeDTD] = React.useState(false);
+const useToggle = function (callback: Dispatch<React.SetStateAction<boolean>>) {
+  return React.useCallback(() => {
+    callback((d) => !d);
+  }, [callback]);
+};
 
-  const handleToggleDisney = React.useCallback(() => {
-    setIncludeDisney((d) => !d);
-  }, [setIncludeDisney]);
+const useSelectors = function () {
+  const [parkIncludeDisney, setParkIncludeDisney] = React.useState(true);
+  const [parkIncludeDCA, setParkIncludeDCA] = React.useState(true);
+  const [parkIncludeDTD, setParkIncludeDTD] = React.useState(false);
 
-  const handleToggleCA = React.useCallback(() => {
-    setIncludeCA((d) => !d);
-  }, [setIncludeCA]);
+  const [typeIncludeRides, setTypeIncludeRides] = React.useState(true);
+  const [typeIncludeShows, setTypeIncludeShows] = React.useState(false);
+  const [typeIncludeMeetGreet, setTypeIncludeMeetGreet] = React.useState(false);
+  const [typeIncludeQuickEat, setTypeIncludeQuickEat] = React.useState(false);
+  const [typeIncludeSitEat, setTypeIncludeSitEat] = React.useState(false);
 
-  const handleToggleDTD = React.useCallback(() => {
-    setIncludeDTD((d) => !d);
-  }, [setIncludeDTD]);
+  const handleToggleParkDisney = useToggle(setParkIncludeDisney);
+  const handleToggleParkCA = useToggle(setParkIncludeDCA);
+  const handleToggleParkDTD = useToggle(setParkIncludeDTD);
 
+  const handleToggleTypeRides = useToggle(setTypeIncludeRides);
+  const handleToggleTypeShows = useToggle(setTypeIncludeShows);
+  const handleToggleTypeMeetGreet = useToggle(setTypeIncludeMeetGreet);
+  const handleToggleTypeQuickEat = useToggle(setTypeIncludeQuickEat);
+  const handleToggleTypeSitEat = useToggle(setTypeIncludeSitEat);
+
+  return React.useMemo(() => {
+    return {
+      parkIncludeDisney: parkIncludeDisney,
+      onToggleParkDisney: handleToggleParkDisney,
+
+      parkIncludeDCA: parkIncludeDCA,
+      onToggleParkDCA: handleToggleParkCA,
+
+      parkIncludeDTD: parkIncludeDTD,
+      onToggleParkDTD: handleToggleParkDTD,
+
+      typeIncludeRides: typeIncludeRides,
+      onToggleTypeRides: handleToggleTypeRides,
+
+      typeIncludeShows,
+      onToggleTypeShows: handleToggleTypeShows,
+
+      typeIncludeMeetGreet,
+      onToggleTypeMeetGreet: handleToggleTypeMeetGreet,
+
+      typeIncludeQuickEat,
+      onToggleTypeQuickEat: handleToggleTypeQuickEat,
+
+      typeIncludeSitEat,
+      onToggleTypeSitEat: handleToggleTypeSitEat,
+    };
+  }, [
+    parkIncludeDisney,
+    handleToggleParkDisney,
+
+    parkIncludeDCA,
+    handleToggleParkCA,
+
+    parkIncludeDTD,
+    handleToggleParkDTD,
+
+    typeIncludeRides,
+    handleToggleTypeRides,
+
+    typeIncludeShows,
+    handleToggleTypeShows,
+
+    typeIncludeMeetGreet,
+    handleToggleTypeMeetGreet,
+
+    typeIncludeQuickEat,
+    handleToggleTypeQuickEat,
+
+    typeIncludeSitEat,
+    handleToggleTypeSitEat,
+  ]);
+};
+
+const useAttractions = function (
+  attractions: Attraction[],
+  parkIncludeDisney: boolean,
+  parkIncludeDCA: boolean,
+  parkIncludeDTD: boolean
+) {
   const filteredAttractions = React.useMemo(() => {
     return attractions
       .filter((a) => {
-        if (!includeCA) {
+        if (!parkIncludeDCA) {
           return a.park !== ThemePark.CALIFORNIA_ADVENTURE;
         }
 
         return true;
       })
       .filter((a) => {
-        if (!includeDisney) {
+        if (!parkIncludeDisney) {
           return a.park !== ThemePark.DISNEYLAND;
         }
 
         return true;
       })
       .filter((a) => {
-        if (!includeDTD) {
+        if (!parkIncludeDTD) {
           return a.park !== ThemePark.DOWNTOWN_DISNEY;
         }
 
         return true;
       });
-  }, [attractions, includeCA, includeDisney, includeDTD]);
+  }, [attractions, parkIncludeDCA, parkIncludeDisney, parkIncludeDTD]);
 
   return React.useMemo(() => {
     return {
       rideList: filteredAttractions,
-      includeDisney,
-      includeCA,
-      includeDTD,
-      onToggleDisney: handleToggleDisney,
-      onToggleCA: handleToggleCA,
-      onToggleDTD: handleToggleDTD,
     };
-  }, [
-    filteredAttractions,
-    includeDisney,
-    includeCA,
-    includeDTD,
-    handleToggleDisney,
-    handleToggleCA,
-    handleToggleDTD,
-  ]);
+  }, [filteredAttractions]);
 };
 
 export const RouletteViewModel: React.FunctionComponent<
@@ -113,29 +183,56 @@ export const RouletteViewModel: React.FunctionComponent<
   const [finalIndex, setFinalIndex] = React.useState(-1);
 
   const {
-    rideList,
-    includeDisney,
-    onToggleDisney,
-    onToggleCA,
-    includeCA,
-    onToggleDTD,
-    includeDTD,
-  } = useAttractions(attractions);
+    parkIncludeDisney,
+    onToggleParkDisney,
 
-  const handleToggleDisney = React.useCallback(() => {
-    setFinalIndex(-1);
-    onToggleDisney();
-  }, [onToggleDisney, setFinalIndex]);
+    parkIncludeDCA,
+    onToggleParkDCA,
 
-  const handleToggleCA = React.useCallback(() => {
-    setFinalIndex(-1);
-    onToggleCA();
-  }, [onToggleCA, setFinalIndex]);
+    parkIncludeDTD,
+    onToggleParkDTD,
 
-  const handleToggleDTD = React.useCallback(() => {
-    setFinalIndex(-1);
-    onToggleDTD();
-  }, [onToggleDTD, setFinalIndex]);
+    typeIncludeRides,
+    onToggleTypeRides,
+
+    typeIncludeShows,
+    onToggleTypeShows,
+
+    typeIncludeMeetGreet,
+    onToggleTypeMeetGreet,
+
+    typeIncludeQuickEat,
+    onToggleTypeQuickEat,
+
+    typeIncludeSitEat,
+    onToggleTypeSitEat,
+  } = useSelectors();
+
+  const { rideList } = useAttractions(
+    attractions,
+    parkIncludeDisney,
+    parkIncludeDCA,
+    parkIncludeDTD
+  );
+
+  const useRouletteToggle = React.useMemo(() => {
+    return function (callback: () => void) {
+      return function () {
+        setFinalIndex(-1);
+        callback();
+      };
+    };
+  }, [setFinalIndex]);
+
+  const handleToggleParkDisney = useRouletteToggle(onToggleParkDisney);
+  const handleToggleParkDCA = useRouletteToggle(onToggleParkDCA);
+  const handleToggleParkDTD = useRouletteToggle(onToggleParkDTD);
+
+  const handleToggleTypeRides = useRouletteToggle(onToggleTypeRides);
+  const handleToggleTypeShows = useRouletteToggle(onToggleTypeShows);
+  const handleToggleTypeMeetGreet = useRouletteToggle(onToggleTypeMeetGreet);
+  const handleToggleTypeQuickEat = useRouletteToggle(onToggleTypeQuickEat);
+  const handleToggleTypeSitEat = useRouletteToggle(onToggleTypeSitEat);
 
   const state: RouletteState = React.useMemo(() => {
     return {
@@ -144,15 +241,32 @@ export const RouletteViewModel: React.FunctionComponent<
 
       attractions: rideList,
 
-      includeDisney,
-      includeCA,
-      includeDTD,
-      onToggleDisney: handleToggleDisney,
-      onToggleCA: handleToggleCA,
-      onToggleDTD: handleToggleDTD,
-
       selectedIndex: finalIndex,
       onIndexSelected: setFinalIndex,
+
+      parkIncludeDisney,
+      onToggleParkIncludeDisney: handleToggleParkDisney,
+
+      parkIncludeDCA,
+      onToggleParkIncludeDCA: handleToggleParkDCA,
+
+      parkIncludeDTD,
+      onToggleParkIncludeDTD: handleToggleParkDTD,
+
+      typeIncludeRides,
+      onToggleTypeIncludeRides: handleToggleTypeRides,
+
+      typeIncludeShows,
+      onToggleTypeIncludeShows: handleToggleTypeShows,
+
+      typeIncludeMeetGreet,
+      onToggleTypeIncludeMeetGreet: handleToggleTypeMeetGreet,
+
+      typeIncludeQuickEat,
+      onToggleTypeIncludeQuickEat: handleToggleTypeQuickEat,
+
+      typeIncludeSitEat,
+      onToggleTypeIncludeSitEat: handleToggleTypeSitEat,
     };
   }, [
     isDark,
@@ -160,15 +274,32 @@ export const RouletteViewModel: React.FunctionComponent<
 
     rideList,
 
-    includeDisney,
-    handleToggleDisney,
-    handleToggleCA,
-    includeCA,
-    includeDTD,
-    handleToggleDTD,
-
     finalIndex,
     setFinalIndex,
+
+    parkIncludeDisney,
+    handleToggleParkDisney,
+
+    parkIncludeDCA,
+    handleToggleParkDCA,
+
+    parkIncludeDTD,
+    handleToggleParkDTD,
+
+    typeIncludeRides,
+    handleToggleTypeRides,
+
+    typeIncludeShows,
+    handleToggleTypeShows,
+
+    typeIncludeMeetGreet,
+    handleToggleTypeMeetGreet,
+
+    typeIncludeQuickEat,
+    handleToggleTypeQuickEat,
+
+    typeIncludeSitEat,
+    handleToggleTypeSitEat,
   ]);
   return children(state);
 };

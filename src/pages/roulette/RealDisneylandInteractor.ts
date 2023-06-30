@@ -16,7 +16,7 @@
 
 import { DisneylandInteractor } from "./DisneylandInteractor";
 import { Attraction } from "./model/Attraction";
-import { getHardcodedParks } from "./DisneyAttractions";
+import { getHardcodedParkData } from "./DisneyAttractions";
 
 const shuffle = function <T>(array: T[]) {
   let currentIndex = array.length;
@@ -44,12 +44,8 @@ export const createDisneylandInteractor = function (): DisneylandInteractor {
     }): Promise<Attraction[]> {
       // Disney blocks us, just hardcode shit.
       const { date } = data;
-      const parks = getHardcodedParks({
+      const parks = await getHardcodedParkData({
         date,
-
-        // Hardcode for now include entertainment like meet-greet
-        // because why not?
-        includeEntertainment: true,
       });
       shuffle(parks);
       return parks;

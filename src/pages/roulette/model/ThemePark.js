@@ -13,24 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { ThemePark } from "./ThemePark";
-
-export enum AttractionType {
-  RIDE = "ride",
-  SHOW = "show",
-  MEET_GREET = "meet_greet",
-  QUICK_EAT = "quick_eat",
-  SIT_EAT = "sit_eat",
-}
-
-export interface Attraction {
-  objectType: "Attraction";
-
-  id: string;
-  name: string;
-  url: string;
-  imageUrl: string;
-  type: AttractionType;
-  park: ThemePark;
-}
+export var ThemePark;
+(function (ThemePark) {
+    ThemePark["DISNEYLAND"] = "disneyland";
+    ThemePark["CALIFORNIA_ADVENTURE"] = "california_adventure";
+    ThemePark["DOWNTOWN_DISNEY"] = "downtown_disney";
+})(ThemePark || (ThemePark = {}));

@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { ThemePark } from "./model/ThemePark";
+// Compile this file with tsc and run the JS result with node
+import { ThemePark } from "../pages/roulette/model/ThemePark";
 
 interface P {
   id: string;
@@ -30,7 +31,7 @@ const rideString = function (r: P): string {
 
   switch (r.park) {
     case ThemePark.CALIFORNIA_ADVENTURE:
-      return `createCANewAttraction({ id: "${r.id}", name: "${name}", url: "${r.url}", imageUrl: "${r.imageUrl}" })`;
+      return `createDCANewAttraction({ id: "${r.id}", name: "${name}", url: "${r.url}", imageUrl: "${r.imageUrl}" })`;
     case ThemePark.DISNEYLAND:
       return `createDLRNewAttraction({ id: "${r.id}", name: "${name}", url: "${r.url}", imageUrl: "${r.imageUrl}" })`;
     case ThemePark.DOWNTOWN_DISNEY:
@@ -69,20 +70,18 @@ export const TEST_PARSE_RIDE_JSON = function (rideJson: string) {
   );
 
   console.log(
-    `${rides
-      .filter((r) => r.park === ThemePark.DISNEYLAND)
-      .map((r: P) => rideString(r))}`
+    `${rides.filter((r) => r.park === ThemePark.DISNEYLAND).map(rideString)}`
   );
 
   console.log(
     `${rides
       .filter((r) => r.park === ThemePark.CALIFORNIA_ADVENTURE)
-      .map((r: P) => rideString(r))}`
+      .map(rideString)}`
   );
 
   console.log(
     `${rides
       .filter((r) => r.park === ThemePark.DOWNTOWN_DISNEY)
-      .map((r: P) => rideString(r))}`
+      .map(rideString)}`
   );
 };

@@ -22,6 +22,7 @@ import {
   Button,
   Card,
   Checkbox,
+  Container,
   Divider,
   FormControlLabel,
   IconButton,
@@ -236,6 +237,9 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
             height={height}
             listRef={listRef}
           />
+
+          <Box flexGrow={1} py={2} />
+
           <ActionSection {...props} spin={spin} onSpin={onSpin} />
         </Stack>
       </Box>
@@ -324,65 +328,146 @@ const ListSection: React.FunctionComponent<
   );
 };
 
-const ActionSection: React.FunctionComponent<
-  RouletteState & { spin: boolean; onSpin: () => void }
-> = function (props) {
-  const { includeDisney, onToggleDisney } = props;
-  const { includeCA, onToggleCA } = props;
-  const { includeDTD, onToggleDTD } = props;
-  const { spin, onSpin } = props;
-  return (
-    <Stack
-      direction="column"
-      mt="auto"
-      mx="auto"
-      px={2}
-      pb={2}
-      width={`min(100%, 600px)`}
-    >
-      <Stack direction="row" justifyContent="center" pb={2}>
+interface ActionProps {
+  spin: boolean;
+  onSpin: () => void;
+}
+
+const RideSelectors: React.FunctionComponent<RouletteState & ActionProps> =
+  function (props) {
+    const { parkIncludeDisney, onToggleParkIncludeDisney } = props;
+    const { parkIncludeDCA, onToggleParkIncludeDCA } = props;
+    const { parkIncludeDTD, onToggleParkIncludeDTD } = props;
+    const { spin } = props;
+    return (
+      <Stack direction="column" width="50%" height="100%">
+        <Typography variant="body2" color="text.secondary" fontWeight={700}>
+          Parks
+        </Typography>
         <FormControlLabel
           componentsProps={LABEL_PROPS}
           disabled={spin}
-          onChange={spin ? undefined : onToggleDisney}
-          control={<Checkbox checked={includeDisney} />}
+          onChange={spin ? undefined : onToggleParkIncludeDisney}
+          control={<Checkbox checked={parkIncludeDisney} />}
           label="Disneyland"
         />
 
         <FormControlLabel
           componentsProps={LABEL_PROPS}
           disabled={spin}
-          onChange={spin ? undefined : onToggleCA}
-          control={<Checkbox checked={includeCA} />}
+          onChange={spin ? undefined : onToggleParkIncludeDCA}
+          control={<Checkbox checked={parkIncludeDCA} />}
           label="California Adventure"
         />
 
         <FormControlLabel
           componentsProps={LABEL_PROPS}
           disabled={spin}
-          onChange={spin ? undefined : onToggleDTD}
-          control={<Checkbox checked={includeDTD} />}
+          onChange={spin ? undefined : onToggleParkIncludeDTD}
+          control={<Checkbox checked={parkIncludeDTD} />}
           label="Downtown Disney"
         />
       </Stack>
-      <Button
-        variant="contained"
-        fullWidth={true}
-        onClick={onSpin}
-        disabled={spin}
-      >
-        {spin ? "Spinning..." : "Spin!"}
-      </Button>
+    );
+  };
 
-      <Box mx="auto">
-        <Typography variant="caption" textAlign="center" color="text.secondary">
-          This Application is not affiliated with Disney company. All product
-          names, logos, and brands are property of their respective owners.
+const TypeSelectors: React.FunctionComponent<RouletteState & ActionProps> =
+  function (props) {
+    const { typeIncludeRides, onToggleTypeIncludeRides } = props;
+    const { typeIncludeShows, onToggleTypeIncludeShows } = props;
+    const { typeIncludeMeetGreet, onToggleTypeIncludeMeetGreet } = props;
+    const { typeIncludeQuickEat, onToggleTypeIncludeQuickEat } = props;
+    const { typeIncludeSitEat, onToggleTypeIncludeSitEat } = props;
+    const { spin } = props;
+    return (
+      <Stack direction="column" width="50%" height="100%">
+        <Typography variant="body2" color="text.secondary" fontWeight={700}>
+          Content Type
         </Typography>
-      </Box>
-    </Stack>
-  );
-};
+        <FormControlLabel
+          componentsProps={LABEL_PROPS}
+          disabled={spin}
+          onChange={spin ? undefined : onToggleTypeIncludeRides}
+          control={<Checkbox checked={typeIncludeRides} />}
+          label="Rides"
+        />
+
+        <FormControlLabel
+          componentsProps={LABEL_PROPS}
+          disabled={spin}
+          onChange={spin ? undefined : onToggleTypeIncludeShows}
+          control={<Checkbox checked={typeIncludeShows} />}
+          label="Shows / Entertainment"
+        />
+
+        <FormControlLabel
+          componentsProps={LABEL_PROPS}
+          disabled={spin}
+          onChange={spin ? undefined : onToggleTypeIncludeMeetGreet}
+          control={<Checkbox checked={typeIncludeMeetGreet} />}
+          label="Character Meet & Greet"
+        />
+
+        <FormControlLabel
+          componentsProps={LABEL_PROPS}
+          disabled={spin}
+          onChange={spin ? undefined : onToggleTypeIncludeQuickEat}
+          control={<Checkbox checked={typeIncludeQuickEat} />}
+          label="Quick Food and Drink"
+        />
+
+        <FormControlLabel
+          componentsProps={LABEL_PROPS}
+          disabled={spin}
+          onChange={spin ? undefined : onToggleTypeIncludeSitEat}
+          control={<Checkbox checked={typeIncludeSitEat} />}
+          label="Sit Down Restaurants"
+        />
+      </Stack>
+    );
+  };
+
+const ContentSelectors: React.FunctionComponent<RouletteState & ActionProps> =
+  function (props) {
+    return (
+      <Stack direction="row" pb={2}>
+        <RideSelectors {...props} />
+        <TypeSelectors {...props} />
+      </Stack>
+    );
+  };
+
+const ActionSection: React.FunctionComponent<RouletteState & ActionProps> =
+  function (props) {
+    const { spin, onSpin } = props;
+    return (
+      <Container maxWidth="md">
+        <Stack direction="column" width="100%" pb={2}>
+          <ContentSelectors {...props} />
+          <Button
+            variant="contained"
+            fullWidth={true}
+            onClick={onSpin}
+            disabled={spin}
+          >
+            {spin ? "Spinning..." : "Spin!"}
+          </Button>
+
+          <Box mx="auto">
+            <Typography
+              variant="caption"
+              textAlign="center"
+              color="text.secondary"
+            >
+              This Application is not affiliated with Disney company. All
+              product names, logos, and brands are property of their respective
+              owners.
+            </Typography>
+          </Box>
+        </Stack>
+      </Container>
+    );
+  };
 
 const useParkToName = function (park: ThemePark): string {
   return React.useMemo(() => {
