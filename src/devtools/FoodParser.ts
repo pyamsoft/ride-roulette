@@ -15,26 +15,31 @@
  */
 
 // Compile this file with tsc and run the JS result with node
-import { ThemePark } from "../pages/roulette/model/ThemePark";
 
-interface P {
+enum Food {
+  DISNEYLAND = "disneyland",
+  CALIFORNIA_ADVENTURE = "california_adventure",
+  DOWNTOWN_DISNEY = "downtown_disney",
+}
+
+interface F {
   id: string;
   url: string;
   name: string;
   imageUrl: string;
-  park: ThemePark;
+  park: Food;
 }
 
-const diningString = function (r: P): string {
+const diningString = function (r: F): string {
   // Fix its a small world
   const name = r.name.replace(/"/g, '\\"');
 
   switch (r.park) {
-    case ThemePark.CALIFORNIA_ADVENTURE:
+    case Food.CALIFORNIA_ADVENTURE:
       return `createDCANewDining({ id: "${r.id}", name: "${name}", url: "${r.url}", imageUrl: "${r.imageUrl}" })`;
-    case ThemePark.DISNEYLAND:
+    case Food.DISNEYLAND:
       return `createDLRNewDining({ id: "${r.id}", name: "${name}", url: "${r.url}", imageUrl: "${r.imageUrl}" })`;
-    case ThemePark.DOWNTOWN_DISNEY:
+    case Food.DOWNTOWN_DISNEY:
       return `createDTDNewDining({ id: "${r.id}", name: "${name}", url: "${r.url}", imageUrl: "${r.imageUrl}" })`;
     default:
       throw new Error(`invalid park: ${r}`);
@@ -47,41 +52,45 @@ const diningString = function (r: P): string {
  * content to this function. It will spit out rides
  * @param diningJson
  */
-export const TEST_PARSE_DINING_JSON = function (diningJson: string) {
-  const j = JSON.parse(diningJson);
-  const dining: P[] = j.results.map(
-    (
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      d: any
-    ) => {
-      return {
-        id: d.id,
-        url: d.urlFriendlyId,
-        name: d.name,
-        imageUrl: d.media ? d.media.finderStandardThumb.url : "",
-        park:
-          d.locationName === "Disneyland Park"
-            ? ThemePark.DISNEYLAND
-            : d.locationName === "Disney California Adventure Park"
-            ? ThemePark.CALIFORNIA_ADVENTURE
-            : ThemePark.DOWNTOWN_DISNEY,
-      };
-    }
-  );
+module.exports = {
+  TEST_PARSE_DINING_JSON: function (diningJson: string) {
+    const j = JSON.parse(diningJson);
+    const dining: F[] = j.results.map(
+      (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        d: any
+      ) => {
+        return {
+          id: d.id,
+          url: d.urlFriendlyId,
+          name: d.name,
+          imageUrl: d.media ? d.media.finderStandardThumb.url : "",
+          park:
+            d.locationName === "Disneyland Park"
+              ? Food.DISNEYLAND
+              : d.locationName === "Disney California Adventure Park"
+              ? Food.CALIFORNIA_ADVENTURE
+              : Food.DOWNTOWN_DISNEY,
+        };
+      }
+    );
 
-  console.log(
-    `${dining.filter((d) => d.park === ThemePark.DISNEYLAND).map(diningString)}`
-  );
+    console.log(
+      `${dining
+        .filter((d) => d.park === Food.DISNEYLAND)
+        .map(diningString)}`
+    );
 
-  console.log(
-    `${dining
-      .filter((d) => d.park === ThemePark.CALIFORNIA_ADVENTURE)
-      .map(diningString)}`
-  );
+    console.log(
+      `${dining
+        .filter((d) => d.park === Food.CALIFORNIA_ADVENTURE)
+        .map(diningString)}`
+    );
 
-  console.log(
-    `${dining
-      .filter((d) => d.park === ThemePark.DOWNTOWN_DISNEY)
-      .map(diningString)}`
-  );
+    console.log(
+      `${dining
+        .filter((d) => d.park === Food.DOWNTOWN_DISNEY)
+        .map(diningString)}`
+    );
+  },
 };

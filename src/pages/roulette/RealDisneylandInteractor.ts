@@ -17,6 +17,7 @@
 import { DisneylandInteractor } from "./DisneylandInteractor";
 import { Attraction } from "./model/Attraction";
 import { getHardcodedParkData } from "./DisneyAttractions";
+import { getHardcodedDining } from "./DisneyDining.ts";
 
 const shuffle = function <T>(array: T[]) {
   let currentIndex = array.length;
@@ -47,8 +48,11 @@ export const createDisneylandInteractor = function (): DisneylandInteractor {
       const parks = await getHardcodedParkData({
         date,
       });
-      shuffle(parks);
-      return parks;
+      const food = await getHardcodedDining();
+      const all = [...parks, ...food];
+
+      shuffle(all);
+      return all;
     },
   };
 };

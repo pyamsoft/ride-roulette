@@ -16,7 +16,7 @@
 
 import React, { Dispatch } from "react";
 import { ViewModelProps } from "../../arch/ViewModel";
-import { Attraction } from "./model/Attraction";
+import { Attraction, AttractionType } from "./model/Attraction";
 import { ThemePark } from "./model/ThemePark";
 
 interface Shared {
@@ -140,7 +140,12 @@ const useAttractions = function (
   attractions: Attraction[],
   parkIncludeDisney: boolean,
   parkIncludeDCA: boolean,
-  parkIncludeDTD: boolean
+  parkIncludeDTD: boolean,
+  typeIncludeRides: boolean,
+  typeIncludeShows: boolean,
+  typeIncludeMeetGreet: boolean,
+  typeIncludeSitEat: boolean,
+  typeIncludeQuickEat: boolean
 ) {
   const filteredAttractions = React.useMemo(() => {
     return attractions
@@ -164,8 +169,53 @@ const useAttractions = function (
         }
 
         return true;
+      })
+      .filter((a) => {
+        if (!typeIncludeRides) {
+          return a.type !== AttractionType.RIDE;
+        }
+
+        return true;
+      })
+      .filter((a) => {
+        if (!typeIncludeShows) {
+          return a.type !== AttractionType.SHOW;
+        }
+
+        return true;
+      })
+      .filter((a) => {
+        if (!typeIncludeMeetGreet) {
+          return a.type !== AttractionType.MEET_GREET;
+        }
+
+        return true;
+      })
+      .filter((a) => {
+        if (!typeIncludeQuickEat) {
+          return a.type !== AttractionType.QUICK_EAT;
+        }
+
+        return true;
+      })
+      .filter((a) => {
+        if (!typeIncludeSitEat) {
+          return a.type !== AttractionType.SIT_EAT;
+        }
+
+        return true;
       });
-  }, [attractions, parkIncludeDCA, parkIncludeDisney, parkIncludeDTD]);
+  }, [
+    attractions,
+    parkIncludeDCA,
+    parkIncludeDisney,
+    parkIncludeDTD,
+    typeIncludeRides,
+    typeIncludeShows,
+    typeIncludeMeetGreet,
+    typeIncludeQuickEat,
+    typeIncludeSitEat,
+  ]);
 
   return React.useMemo(() => {
     return {
@@ -212,7 +262,12 @@ export const RouletteViewModel: React.FunctionComponent<
     attractions,
     parkIncludeDisney,
     parkIncludeDCA,
-    parkIncludeDTD
+    parkIncludeDTD,
+    typeIncludeRides,
+    typeIncludeShows,
+    typeIncludeMeetGreet,
+    typeIncludeSitEat,
+    typeIncludeQuickEat
   );
 
   const useRouletteToggle = React.useMemo(() => {

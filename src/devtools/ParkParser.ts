@@ -15,14 +15,19 @@
  */
 
 // Compile this file with tsc and run the JS result with node
-import { ThemePark } from "../pages/roulette/model/ThemePark";
+
+enum Park {
+  DISNEYLAND = "disneyland",
+  CALIFORNIA_ADVENTURE = "california_adventure",
+  DOWNTOWN_DISNEY = "downtown_disney",
+}
 
 interface P {
   id: string;
   url: string;
   name: string;
   imageUrl: string;
-  park: ThemePark;
+  park: Park;
 }
 
 const rideString = function (r: P): string {
@@ -30,11 +35,11 @@ const rideString = function (r: P): string {
   const name = r.name.replace(/"/g, '\\"');
 
   switch (r.park) {
-    case ThemePark.CALIFORNIA_ADVENTURE:
+    case Park.CALIFORNIA_ADVENTURE:
       return `createDCANewAttraction({ id: "${r.id}", name: "${name}", url: "${r.url}", imageUrl: "${r.imageUrl}" })`;
-    case ThemePark.DISNEYLAND:
+    case Park.DISNEYLAND:
       return `createDLRNewAttraction({ id: "${r.id}", name: "${name}", url: "${r.url}", imageUrl: "${r.imageUrl}" })`;
-    case ThemePark.DOWNTOWN_DISNEY:
+    case Park.DOWNTOWN_DISNEY:
       return `createDTDNewAttraction({ id: "${r.id}", name: "${name}", url: "${r.url}", imageUrl: "${r.imageUrl}" })`;
     default:
       throw new Error(`invalid park: ${r}`);
@@ -47,41 +52,41 @@ const rideString = function (r: P): string {
  * content to this function. It will spit out rides
  * @param rideJson
  */
-export const TEST_PARSE_RIDE_JSON = function (rideJson: string) {
-  const j = JSON.parse(rideJson);
-  const rides: P[] = j.results.map(
-    (
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      r: any
-    ) => {
-      return {
-        id: r.id,
-        url: r.urlFriendlyId,
-        name: r.name,
-        imageUrl: r.media ? r.media.finderStandardThumb.url : "",
-        park:
-          r.locationName === "Disneyland Park"
-            ? ThemePark.DISNEYLAND
-            : r.locationName === "Disney California Adventure Park"
-            ? ThemePark.CALIFORNIA_ADVENTURE
-            : ThemePark.DOWNTOWN_DISNEY,
-      };
-    }
-  );
+module.exports = {
+  TEST_PARSE_RIDE_JSON: function (rideJson: string) {
+    const j = JSON.parse(rideJson);
+    const rides: P[] = j.results.map(
+      (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        r: any
+      ) => {
+        return {
+          id: r.id,
+          url: r.urlFriendlyId,
+          name: r.name,
+          imageUrl: r.media ? r.media.finderStandardThumb.url : "",
+          park:
+            r.locationName === "Disneyland Park"
+              ? Park.DISNEYLAND
+              : r.locationName === "Disney California Adventure Park"
+              ? Park.CALIFORNIA_ADVENTURE
+              : Park.DOWNTOWN_DISNEY,
+        };
+      }
+    );
 
-  console.log(
-    `${rides.filter((r) => r.park === ThemePark.DISNEYLAND).map(rideString)}`
-  );
+    console.log(
+      `${rides.filter((r) => r.park === Park.DISNEYLAND).map(rideString)}`
+    );
 
-  console.log(
-    `${rides
-      .filter((r) => r.park === ThemePark.CALIFORNIA_ADVENTURE)
-      .map(rideString)}`
-  );
+    console.log(
+      `${rides
+        .filter((r) => r.park === Park.CALIFORNIA_ADVENTURE)
+        .map(rideString)}`
+    );
 
-  console.log(
-    `${rides
-      .filter((r) => r.park === ThemePark.DOWNTOWN_DISNEY)
-      .map(rideString)}`
-  );
+    console.log(
+      `${rides.filter((r) => r.park === Park.DOWNTOWN_DISNEY).map(rideString)}`
+    );
+  },
 };

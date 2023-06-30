@@ -1,0 +1,8 @@
+#!/bin/sh
+
+rm -rf ./*.js || exit 1
+tsc "$@" || exit 1
+node test.js >>out.temp || exit 1
+rm -rf ./*.js || exit 1
+mv out.temp out.js || exit 1
+exit 0
