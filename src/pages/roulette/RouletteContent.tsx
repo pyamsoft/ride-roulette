@@ -148,6 +148,52 @@ const useSpin = function (
   }, [spin, handleSpin]);
 };
 
+const useConfetti = function (spin: boolean, selectedIndex: number) {
+  const [confettiAllowed, setConfettiAllowed] = React.useState(false);
+  const [finalConfettiRain, setFinalConfettiRain] = React.useState(false);
+
+  const continueDroppingConfetti = React.useMemo(
+    () => confettiAllowed && !spin && !finalConfettiRain,
+    [confettiAllowed, spin, finalConfettiRain]
+  );
+
+  // If the final confetti has completed, stop allowing the rain down
+  const handleConfettiComplete = React.useCallback(() => {
+    if (finalConfettiRain) {
+      setConfettiAllowed(false);
+      setFinalConfettiRain(false);
+    }
+  }, [finalConfettiRain, setConfettiAllowed, setFinalConfettiRain]);
+
+  React.useEffect(() => {
+    // If we have a selected index we are allowed to show confetti
+    if (selectedIndex >= 0) {
+      setConfettiAllowed(true);
+    }
+  }, [selectedIndex, setConfettiAllowed]);
+
+  React.useEffect(() => {
+    // Don't need to stop raining if we aren't in the first place
+    if (!continueDroppingConfetti) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setFinalConfettiRain(true);
+    }, 5000);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [continueDroppingConfetti, setFinalConfettiRain]);
+
+  return {
+    confettiAllowed,
+    continueDroppingConfetti,
+    onConfettiComplete: handleConfettiComplete,
+  };
+};
+
 export const RouletteContent: React.FunctionComponent<RouletteState> =
   function (props) {
     const { attractions } = props;
@@ -162,35 +208,18 @@ export const RouletteContent: React.FunctionComponent<RouletteState> =
     // Spinning is purely animation only
     const { spin, onSpin } = useSpin(listRef, attractions, onIndexSelected);
 
-    const [rain, setRain] = React.useState(false);
-
-    React.useEffect(() => {
-      if (selectedIndex >= 0) {
-        setRain(true);
-      }
-    }, [selectedIndex, setRain]);
-
-    React.useEffect(() => {
-      if (selectedIndex < 0) {
-        return;
-      }
-
-      const timer = window.setTimeout(() => {
-        setRain(false);
-      }, 10000);
-
-      return () => {
-        window.clearTimeout(timer);
-      };
-    }, [selectedIndex, setRain]);
+    // Confetti is purely animation
+    const { continueDroppingConfetti, onConfettiComplete, confettiAllowed } =
+      useConfetti(spin, selectedIndex);
 
     return (
       <Box width="100%" height="100%" overflow="hidden" position="relative">
         <ReactConfetti
-          recycle={rain}
+          recycle={continueDroppingConfetti}
           width={width}
           height={height}
-          run={selectedIndex >= 0}
+          run={confettiAllowed}
+          onConfettiComplete={onConfettiComplete}
         />
 
         <Stack
