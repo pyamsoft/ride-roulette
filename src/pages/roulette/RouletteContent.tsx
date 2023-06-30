@@ -135,7 +135,7 @@ const useSpin = function (
     const timer = window.setTimeout(() => {
       setSpin(false);
       handleScrollToRandomPosition(true);
-    }, 5 * 1000);
+    }, 3 * 1000);
 
     return () => {
       window.clearTimeout(timer);
@@ -182,7 +182,7 @@ const useConfetti = function (spin: boolean, selectedIndex: number) {
 
     const timer = window.setTimeout(() => {
       setFinalConfettiRain(true);
-    }, 5000);
+    }, 5 * 1000);
 
     return () => {
       window.clearTimeout(timer);
