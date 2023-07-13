@@ -38,9 +38,10 @@ export default defineConfig(({ command, mode }) => {
         eslint: {
           lintCommand: scripts.eslint,
         },
-        stylelint: {
-          lintCommand: scripts.stylelint,
-        },
+        // Currently broken
+        // stylelint: {
+        //   lintCommand: scripts.stylelint,
+        // },
       }),
     ];
   }
