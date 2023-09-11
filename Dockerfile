@@ -15,13 +15,8 @@ COPY src ./src
 COPY index.html ./
 COPY .eslintrc.cjs ./
 
-COPY .firebaserc ./
-COPY firebase.json ./
+RUN yarn && yarn run build
 
-RUN mkdir -p ${HOME}/.config/configstore
-COPY .firebase-tools.json ./
-RUN mv ./.firebase-tools.json ${HOME}/.config/configstore/firebase-tools.json
+RUN mkdir -p /output
 
-RUN yarn
-
-CMD [ "yarn", "run", "deploy" ]
+CMD [ "cp", "-r", "dist", "/output" ]

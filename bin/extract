@@ -1,0 +1,8 @@
+#!/bin/sh
+
+exec podman run \
+  --rm -i -t \
+  --security-opt no-new-privileges:true \
+  --cap-drop ALL \
+  --mount type=bind,source=./dist,target=/output \
+  localhost/pyamsoft/ride-roulette:latest
