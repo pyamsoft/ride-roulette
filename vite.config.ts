@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { scripts } from "./package.json";
-
-import { defineConfig, splitVendorChunkPlugin, UserConfigExport } from "vite";
+import { defineConfig } from "vitest/config";
+import { splitVendorChunkPlugin, UserConfigExport } from "vite";
 import checker from "vite-plugin-checker";
 import react from "@vitejs/plugin-react";
 
@@ -44,6 +42,12 @@ export default defineConfig(({ command, mode }) => {
         // },
       }),
     ];
+
+    baseConfig.test = {
+      environment: "jsdom",
+      useAtomics: true,
+      setupFiles: "src/__test__/env/setup.env.ts",
+    };
   }
 
   return {

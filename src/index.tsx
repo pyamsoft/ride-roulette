@@ -32,7 +32,11 @@ const initReact = function (props: {
   );
 
   const { graph, storage } = props;
-  root.render(<App graph={graph} storage={storage} />);
+
+  // React types 18.2.22 is weird and reports this as an issue, when its not.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const content: any = <App graph={graph} storage={storage} />
+  root.render(content);
 };
 
 const main = function () {

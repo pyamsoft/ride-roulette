@@ -74,7 +74,7 @@ const APP_BAR = {
 const useSpin = function (
   listRef: RefObject<FixedSizeList>,
   attractions: Attraction[],
-  onSelectIndex: (i: number) => void
+  onSelectIndex: (i: number) => void,
 ) {
   const [spin, setSpin] = React.useState(false);
   const [counter, setCounter] = React.useState(0);
@@ -99,7 +99,7 @@ const useSpin = function (
         }
       }
     },
-    [attractions, listRef, onSelectIndex]
+    [attractions, listRef, onSelectIndex],
   );
 
   React.useEffect(() => {
@@ -119,7 +119,7 @@ const useSpin = function (
         ? 45
         : counter % 7 === 0
         ? 10
-        : 32
+        : 32,
     );
 
     return () => {
@@ -156,7 +156,7 @@ const useConfetti = function (spin: boolean, selectedIndex: number) {
 
   const continueDroppingConfetti = React.useMemo(
     () => confettiAllowed && !spin && !finalConfettiRain,
-    [confettiAllowed, spin, finalConfettiRain]
+    [confettiAllowed, spin, finalConfettiRain],
   );
 
   // If the final confetti has completed, stop allowing the rain down
@@ -284,23 +284,26 @@ const ListSection: React.FunctionComponent<
   const { width, height } = props;
   const { selectedIndex, attractions } = props;
 
-  const Column = React.useCallback(
-    (listProps: { index: number; style: object }) => {
-      const { style, index } = listProps;
-      return (
-        <Box style={style}>
-          <Stack direction="column" width="100%" height="100%" px={2}>
-            <RideCard
-              spin={spin}
-              glow={selectedIndex === index}
-              attraction={attractions[index % attractions.length]}
-            />
-          </Stack>
-        </Box>
-      );
-    },
-    [attractions, selectedIndex, spin]
-  );
+  // React types 18.2.22 complains about this too, but its fine
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Column: (props: { index: number; style: object }) => any =
+    React.useCallback(
+      (listProps) => {
+        const { style, index } = listProps;
+        return (
+          <Box style={style}>
+            <Stack direction="column" width="100%" height="100%" px={2}>
+              <RideCard
+                spin={spin}
+                glow={selectedIndex === index}
+                attraction={attractions[index % attractions.length]}
+              />
+            </Stack>
+          </Box>
+        );
+      },
+      [attractions, selectedIndex, spin],
+    );
 
   return (
     <Box width="100%">
