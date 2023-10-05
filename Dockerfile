@@ -11,6 +11,7 @@ COPY tsconfig.json ./
 COPY tsconfig.node.json ./
 COPY vite.config.ts ./
 
+COPY public ./public
 COPY src ./src
 COPY index.html ./
 COPY .eslintrc.cjs ./
