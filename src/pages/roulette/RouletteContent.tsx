@@ -308,6 +308,8 @@ const ListSection: React.FunctionComponent<
   return (
     <Box width="100%">
       {attractions.length > 0 ? (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <FixedSizeList
           ref={listRef}
           className="no-visual-scrollbar"
