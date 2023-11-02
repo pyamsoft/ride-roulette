@@ -27,3 +27,11 @@ yarn-error.log*
 .firebaserc
 .firebase
 .firebase-tools.json
+
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

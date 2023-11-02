@@ -1,7 +1,6 @@
 {
   "name": "ride-roulette",
   "version": "0.2.0",
-  "private": false,
   "dependencies": {
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
@@ -54,5 +53,6 @@
     "vite-plugin-checker": "0.6.2",
     "vitest": "0.34.5",
     "web-vitals": "3.4.0"
-  }
+  },
+  "packageManager": "yarn@4.0.1"
 }
