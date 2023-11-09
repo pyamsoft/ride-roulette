@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-import { Attraction } from "./model/Attraction";
-
-export interface DisneylandInteractor {
-  objectType: "DisneylandInteractor";
-
-  getAttractions: (data: { date: Date }) => Promise<Attraction[]>;
-}
+export const DarkModePreference = window.matchMedia(
+  "(prefers-color-scheme: dark)",
+);

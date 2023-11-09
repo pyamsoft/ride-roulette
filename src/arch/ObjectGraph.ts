@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { DisneylandInteractor } from "../pages/roulette/DisneylandInteractor";
+import { DisneylandInteractor } from "../pages/roulette/arch/DisneylandInteractor";
 
 export interface ObjectGraphInteractors {
   disneyland: DisneylandInteractor;

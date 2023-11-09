@@ -15,13 +15,109 @@
  */
 
 import React from "react";
-import { AppProps, AppViewModel } from "./AppViewModel";
-import { AppContent } from "./AppContent";
+import { useInstallAppGlobals } from "./AppGlobals";
+import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { useWindowSize } from "../hooks/useWindowSize";
+import { useDarkMode } from "../hooks/useDarkMode";
+import { SplashPage } from "../pages/splash/SplashPage";
+import { RoulettePage } from "../pages/roulette/RoulettePage";
+import { useAtom } from "jotai";
+import {
+  AttractionList,
+  AttractionLoadError,
+  AttractionLoading,
+  ShowSplashScreen,
+} from "./AppAtoms";
+import { useAppViewModel } from "./useAppViewModel";
+import { useFirstMount } from "../hooks/useFirstMount";
 
-export const App: React.FunctionComponent<AppProps> = function (props) {
+export const App: React.FunctionComponent = function () {
+  useInstallAppGlobals();
+
+  const today = React.useMemo(() => new Date(), []);
+  const [showSplash, setShowSplash] = useAtom(ShowSplashScreen);
+  const [attractions, setAttractions] = useAtom(AttractionList);
+  const [attractionLoading, setAttractionLoading] = useAtom(AttractionLoading);
+  const [attractionError, setAttractionError] = useAtom(AttractionLoadError);
+
+  const viewModel = useAppViewModel(today);
+
+  const { width, height } = useWindowSize();
+  const { isDark, onDarkModeToggled } = useDarkMode();
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: isDark ? "dark" : "light",
+        },
+      }),
+    [isDark],
+  );
+
+  const handleFinishSplash = () => {
+    viewModel.handleFinishSplashScreen(setShowSplash);
+  };
+
+  const handleLoadAttractions = React.useCallback(() => {
+    viewModel.handleLoadAttractions(
+      setAttractionLoading,
+      setAttractions,
+      setAttractionError,
+    );
+  }, [viewModel, setAttractionLoading, setAttractions, setAttractionError]);
+
+  React.useEffect(() => {
+    const style = document.createElement("style");
+    style.id = "custom-css";
+
+    // Custom inject CSS into the document head.
+    // Wild.
+    style.innerHTML = `:root{
+      --color-primary-main:${theme.palette.primary.main};
+      --color-background-default:${theme.palette.background.default};
+    }`.replace(/\s+/g, "");
+
+    document.head.append(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, [theme]);
+
+  const firstMount = useFirstMount();
+  React.useEffect(() => {
+    if (!firstMount) {
+      return;
+    }
+
+    handleLoadAttractions();
+  }, [firstMount, handleLoadAttractions]);
+
   return (
-    <AppViewModel {...props}>
-      {(state) => <AppContent {...state} />}
-    </AppViewModel>
+    <CssBaseline>
+      <ThemeProvider theme={theme}>
+        <Box
+          width={width}
+          minWidth={width}
+          maxWidth={width}
+          height={height}
+          minHeight={height}
+          maxHeight={height}
+          bgcolor="background.default"
+        >
+          {showSplash || attractionLoading || !!attractionError ? (
+            <SplashPage
+              loading={attractions.length <= 0 || attractionLoading}
+              onDone={handleFinishSplash}
+            />
+          ) : (
+            <RoulettePage
+              isDark={isDark}
+              onDarkModeToggled={onDarkModeToggled}
+            />
+          )}
+        </Box>
+      </ThemeProvider>
+    </CssBaseline>
   );
 };

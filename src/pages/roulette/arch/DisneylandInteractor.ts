@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export var ThemePark;
-(function (ThemePark) {
-    ThemePark["DISNEYLAND"] = "disneyland";
-    ThemePark["CALIFORNIA_ADVENTURE"] = "california_adventure";
-    ThemePark["DOWNTOWN_DISNEY"] = "downtown_disney";
-})(ThemePark || (ThemePark = {}));
+
+import { Attraction } from "../model/Attraction";
+
+export interface DisneylandInteractor {
+  objectType: "DisneylandInteractor";
+
+  getAttractions: (data: { date: Date }) => Promise<Attraction[]>;
+}

@@ -15,15 +15,27 @@
  */
 
 import React from "react";
-import { SplashProps, SplashViewModel } from "./SplashViewModel";
-import { SplashContent } from "./SplashContent";
+import { Box, Fade, Stack, Typography } from "@mui/material";
 
-export const SplashPage: React.FunctionComponent<SplashProps> = function (
-  props
-) {
+export const SplashPage: React.FunctionComponent<{
+  loading: boolean;
+  onDone: () => void;
+}> = function (props) {
+  const { loading, onDone } = props;
   return (
-    <SplashViewModel {...props}>
-      {(state) => <SplashContent {...state} />}
-    </SplashViewModel>
+    <Fade in={loading} timeout={1000} onExited={onDone}>
+      <Stack direction="column" width="100%" height="100%">
+        <Box m="auto" p={2}>
+          <Typography
+            variant="h2"
+            fontWeight={700}
+            color="text.primary"
+            textAlign="center"
+          >
+            Ride Roulette
+          </Typography>
+        </Box>
+      </Stack>
+    </Fade>
   );
 };

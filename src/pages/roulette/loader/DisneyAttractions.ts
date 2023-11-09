@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { Attraction, AttractionType } from "./model/Attraction";
-import { ThemePark } from "./model/ThemePark";
+import { Attraction, AttractionType } from "../model/Attraction";
+import { ThemePark } from "../model/ThemePark";
 
 const createDLRNewAttraction = function (data: {
   id: string;

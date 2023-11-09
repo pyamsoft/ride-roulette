@@ -15,19 +15,12 @@
  */
 
 import React from "react";
+import { useAtom } from "jotai";
+import { DarkTheme } from "../app/AppAtoms";
+import { DarkModePreference } from "../app/Dark";
 
 export const useDarkMode = function () {
-  const darkModePreference = React.useMemo(
-    () => window.matchMedia("(prefers-color-scheme: dark)"),
-    []
-  );
-
-  const initialIsDark = React.useMemo(
-    () => darkModePreference.matches,
-    [darkModePreference]
-  );
-
-  const [isDark, setDark] = React.useState(initialIsDark);
+  const [isDark, setDark] = useAtom(DarkTheme);
 
   const handleDarkModeToggled = React.useCallback(() => {
     setDark((d) => !d);
@@ -38,12 +31,12 @@ export const useDarkMode = function () {
       setDark(e.matches);
     };
 
-    darkModePreference.addEventListener("change", listener);
+    DarkModePreference.addEventListener("change", listener);
 
     return () => {
-      darkModePreference.removeEventListener("change", listener);
+      DarkModePreference.removeEventListener("change", listener);
     };
-  }, [darkModePreference, setDark]);
+  }, [setDark]);
 
   return React.useMemo(() => {
     return {

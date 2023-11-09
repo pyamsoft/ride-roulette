@@ -15,9 +15,9 @@
  */
 
 import { DisneylandInteractor } from "./DisneylandInteractor";
-import { Attraction } from "./model/Attraction";
-import { getHardcodedParkData } from "./DisneyAttractions";
-import { getHardcodedDining } from "./DisneyDining.ts";
+import { Attraction } from "../model/Attraction";
+import { getHardcodedParkData } from "../loader/DisneyAttractions";
+import { getHardcodedDining } from "../loader/DisneyDining";
 
 const shuffle = function <T>(array: T[]) {
   let currentIndex = array.length;

@@ -16,8 +16,12 @@
 
 import React from "react";
 
-export type ViewModelChildren<T = object> = (props: T) => React.ReactElement;
+export const useFirstMount = function () {
+  const firstMount = React.useRef(true);
 
-export type ViewModelProps<P = object, S = object> = P & {
-  children: ViewModelChildren<S>;
+  React.useEffect(() => {
+    firstMount.current = false;
+  }, [firstMount]);
+
+  return firstMount.current;
 };

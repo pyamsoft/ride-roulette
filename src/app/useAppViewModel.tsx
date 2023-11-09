@@ -14,8 +14,18 @@
  * limitations under the License.
  */
 
-export interface AppStorage {
-  objectType: "AppStorage";
+import { AppViewModel, createAppViewModel } from "./AppViewModel";
+import { useObjectGraph } from "./AppObjectGraph";
+import React from "react";
 
-  sessionToken: () => string;
-}
+export const useAppViewModel = function (date: Date): AppViewModel {
+  const graph = useObjectGraph();
+  const { interactors } = graph;
+  const { disneyland } = interactors;
+
+  return React.useMemo(
+    () => createAppViewModel(disneyland, date),
+
+    [disneyland, date],
+  );
+};

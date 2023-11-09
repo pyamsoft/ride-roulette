@@ -15,7 +15,9 @@
  */
 
 import { ObjectGraph } from "../arch/ObjectGraph";
-import { createDisneylandInteractor } from "../pages/roulette/RealDisneylandInteractor";
+import { createDisneylandInteractor } from "../pages/roulette/arch/RealDisneylandInteractor";
+import { useAtomValue } from "jotai";
+import { DefaultObjectGraph } from "./AppAtoms";
 
 export const createAppObjectGraph = function (): ObjectGraph {
   return {
@@ -24,4 +26,13 @@ export const createAppObjectGraph = function (): ObjectGraph {
       disneyland: createDisneylandInteractor(),
     },
   };
+};
+
+export const useObjectGraph = function (): ObjectGraph {
+  const graph = useAtomValue(DefaultObjectGraph);
+  if (!graph) {
+    throw new Error("ObjectGraph must be installed!");
+  }
+
+  return graph;
 };
