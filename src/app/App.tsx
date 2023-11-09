@@ -105,17 +105,17 @@ export const App: React.FunctionComponent = function () {
           maxHeight={height}
           bgcolor="background.default"
         >
-          {showSplash || attractionLoading || !!attractionError ? (
-            <SplashPage
-              loading={attractions.length <= 0 || attractionLoading}
-              onDone={handleFinishSplash}
-            />
-          ) : (
-            <RoulettePage
-              isDark={isDark}
-              onDarkModeToggled={onDarkModeToggled}
-            />
-          )}
+          <RoulettePage isDark={isDark} onDarkModeToggled={onDarkModeToggled} />
+
+          <SplashPage
+            loading={
+              showSplash ||
+              attractionLoading ||
+              !!attractionError ||
+              attractions.length <= 0
+            }
+            onDone={handleFinishSplash}
+          />
         </Box>
       </ThemeProvider>
     </CssBaseline>

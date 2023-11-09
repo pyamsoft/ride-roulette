@@ -23,8 +23,26 @@ export const SplashPage: React.FunctionComponent<{
 }> = function (props) {
   const { loading, onDone } = props;
   return (
-    <Fade in={loading} timeout={1000} onExited={onDone}>
-      <Stack direction="column" width="100%" height="100%">
+    <Fade
+      in={loading}
+      onExited={onDone}
+      mountOnEnter={false}
+      unmountOnExit={true}
+      appear={false}
+      timeout={1600}
+    >
+      <Stack
+        bgcolor="background.default"
+        direction="column"
+        width="100%"
+        height="100%"
+        position="fixed"
+        top={0}
+        bottom={0}
+        left={0}
+        right={0}
+        zIndex={10000}
+      >
         <Box m="auto" p={2}>
           <Typography
             variant="h2"
