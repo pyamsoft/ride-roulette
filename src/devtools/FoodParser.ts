@@ -58,7 +58,7 @@ module.exports = {
     const dining: F[] = j.results.map(
       (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        d: any
+        d: any,
       ) => {
         return {
           id: d.id,
@@ -72,25 +72,23 @@ module.exports = {
               ? Food.CALIFORNIA_ADVENTURE
               : Food.DOWNTOWN_DISNEY,
         };
-      }
+      },
     );
 
     console.log(
-      `${dining
-        .filter((d) => d.park === Food.DISNEYLAND)
-        .map(diningString)}`
+      `${dining.filter((d) => d.park === Food.DISNEYLAND).map(diningString)}`,
     );
 
     console.log(
       `${dining
         .filter((d) => d.park === Food.CALIFORNIA_ADVENTURE)
-        .map(diningString)}`
+        .map(diningString)}`,
     );
 
     console.log(
       `${dining
         .filter((d) => d.park === Food.DOWNTOWN_DISNEY)
-        .map(diningString)}`
+        .map(diningString)}`,
     );
   },
 };

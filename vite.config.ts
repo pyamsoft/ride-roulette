@@ -18,7 +18,7 @@ import { scripts } from "./package.json";
 import { defineConfig } from "vitest/config";
 import { splitVendorChunkPlugin, UserConfigExport } from "vite";
 import checker from "vite-plugin-checker";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
