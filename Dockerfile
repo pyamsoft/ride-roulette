@@ -5,8 +5,7 @@ WORKDIR /ride-roulette
 RUN umask 0022
 
 COPY package.json ./
-COPY yarn.lock ./
-COPY .yarnrc.yml ./
+COPY pnpm-lock.yaml ./
 
 COPY tsconfig.json ./
 COPY tsconfig.node.json ./
@@ -21,7 +20,7 @@ COPY .eslintrc.cjs ./
 RUN corepack enable
 
 # Build
-RUN yarn && yarn run build
+RUN pnpm install && pnpm run build
 
 # Output
 RUN mkdir -p /output

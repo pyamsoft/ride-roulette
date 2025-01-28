@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,8 +69,8 @@ module.exports = {
             d.locationName === "Disneyland Park"
               ? Food.DISNEYLAND
               : d.locationName === "Disney California Adventure Park"
-              ? Food.CALIFORNIA_ADVENTURE
-              : Food.DOWNTOWN_DISNEY,
+                ? Food.CALIFORNIA_ADVENTURE
+                : Food.DOWNTOWN_DISNEY,
         };
       },
     );

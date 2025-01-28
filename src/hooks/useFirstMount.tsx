@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 import React from "react";
 
 export const useFirstMount = function () {
-  const firstMount = React.useRef(true);
+  const [firstMount, setFirstMount] = React.useState(true);
 
   React.useEffect(() => {
-    firstMount.current = false;
-  }, [firstMount]);
+    setFirstMount(false);
+  }, [setFirstMount]);
 
-  return firstMount.current;
+  return firstMount;
 };

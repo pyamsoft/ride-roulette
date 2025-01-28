@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,19 +50,19 @@ export const createDisneylandHttp = function (props: {
     get: async function <T>(
       url: string,
       params?: URLSearchParams,
-      headers?: object
+      headers?: object,
     ): Promise<HttpResponse<T>> {
       return http.get(
         `${getBaseUrl()}/${url}`,
         params,
-        compileHeaders(headers)
+        compileHeaders(headers),
       );
     },
 
     post: async function <T>(
       url: string,
       body?: object,
-      headers?: object
+      headers?: object,
     ): Promise<HttpResponse<T>> {
       return http.post(`${getBaseUrl()}/${url}`, body, compileHeaders(headers));
     },
@@ -70,7 +70,7 @@ export const createDisneylandHttp = function (props: {
     put: async function <T>(
       url: string,
       body?: object,
-      headers?: object
+      headers?: object,
     ): Promise<HttpResponse<T>> {
       return http.put(`${getBaseUrl()}/${url}`, body, compileHeaders(headers));
     },

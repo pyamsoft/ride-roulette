@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -310,8 +310,8 @@ const APP_BAR = {
 };
 
 const useSpin = function (
-  listRef: RefObject<FixedSizeList>,
-  attractions: Attraction[],
+  listRef: RefObject<FixedSizeList | null>,
+  attractions: ReadonlyArray<Attraction>,
   onSelectIndex: (i: number) => void,
 ) {
   const [spin, setSpin] = React.useState(false);
@@ -354,10 +354,10 @@ const useSpin = function (
       counter % 2 === 0
         ? 20
         : counter % 3 === 0
-        ? 45
-        : counter % 7 === 0
-        ? 10
-        : 32,
+          ? 45
+          : counter % 7 === 0
+            ? 10
+            : 32,
     );
 
     return () => {
@@ -453,18 +453,18 @@ const TopBar: React.FunctionComponent<RouletteProps> = function (props) {
           </IconButton>
         </Box>
       </Toolbar>
-      <Divider orientation="horizontal" light={true} />
+      <Divider orientation="horizontal" />
     </AppBar>
   );
 };
 
 const ListSection: React.FunctionComponent<{
   selectedIndex: number;
-  attractionList: Attraction[];
+  attractionList: ReadonlyArray<Attraction>;
   spin: boolean;
   width: number;
   height: number;
-  listRef: RefObject<FixedSizeList>;
+  listRef: RefObject<FixedSizeList | null>;
 }> = function (props) {
   const { spin } = props;
   const { listRef } = props;

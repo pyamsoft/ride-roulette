@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,29 +19,29 @@ export interface HttpClient {
 
   get: <
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    T = any
+    T = any,
   >(
     url: string,
     params?: URLSearchParams,
-    headers?: object
+    headers?: object,
   ) => Promise<HttpResponse<T>>;
 
   post: <
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    T = any
+    T = any,
   >(
     url: string,
     body?: object,
-    headers?: object
+    headers?: object,
   ) => Promise<HttpResponse<T>>;
 
   put: <
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    T = any
+    T = any,
   >(
     url: string,
     body?: object,
-    headers?: object
+    headers?: object,
   ) => Promise<HttpResponse<T>>;
 }
 

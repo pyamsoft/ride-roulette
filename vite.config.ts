@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,38 +14,21 @@
  * limitations under the License.
  */
 
-import { scripts } from "./package.json";
 import { defineConfig } from "vitest/config";
-import { splitVendorChunkPlugin, UserConfigExport } from "vite";
-import checker from "vite-plugin-checker";
+import { UserConfigExport } from "vite";
 import react from "@vitejs/plugin-react-swc";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   const baseConfig: UserConfigExport = {
-    plugins: [react(), splitVendorChunkPlugin()],
+    plugins: [react()],
   };
 
   const isProduction = mode === "production";
 
   if (!isProduction) {
-    baseConfig.plugins = [
-      ...baseConfig.plugins,
-      checker({
-        typescript: true,
-        eslint: {
-          lintCommand: scripts.eslint,
-        },
-        // Currently broken
-        // stylelint: {
-        //   lintCommand: scripts.stylelint,
-        // },
-      }),
-    ];
-
     baseConfig.test = {
       environment: "jsdom",
-      useAtomics: true,
       setupFiles: "src/__test__/env/setup.env.ts",
     };
   }

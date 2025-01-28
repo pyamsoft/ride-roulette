@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,8 +66,8 @@ const createDCANewDining = function (data: {
 };
 
 const addDisneylandDining = async function (
-  attractions: Attraction[]
-): Promise<Attraction[]> {
+  attractions: ReadonlyArray<Attraction>,
+): Promise<ReadonlyArray<Attraction>> {
   attractions = [
     ...attractions,
     createDLRNewDining({
@@ -339,8 +339,8 @@ const addDisneylandDining = async function (
 };
 
 const addDCADining = async function (
-  attractions: Attraction[]
-): Promise<Attraction[]> {
+  attractions: ReadonlyArray<Attraction>,
+): Promise<ReadonlyArray<Attraction>> {
   attractions = [
     ...attractions,
     createDCANewDining({
@@ -652,8 +652,8 @@ const addDCADining = async function (
 };
 
 const addDTDDining = async function (
-  attractions: Attraction[]
-): Promise<Attraction[]> {
+  attractions: ReadonlyArray<Attraction>,
+): Promise<ReadonlyArray<Attraction>> {
   attractions = [
     ...attractions,
 
@@ -941,8 +941,10 @@ const addDTDDining = async function (
   return attractions;
 };
 
-export const getHardcodedDining = async function (): Promise<Attraction[]> {
-  let at: Attraction[] = [];
+export const getHardcodedDining = async function (): Promise<
+  ReadonlyArray<Attraction>
+> {
+  let at: ReadonlyArray<Attraction> = [];
 
   at = await addDisneylandDining(at);
   at = await addDCADining(at);

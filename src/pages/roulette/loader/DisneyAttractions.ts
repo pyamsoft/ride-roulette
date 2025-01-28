@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -129,9 +129,9 @@ const isFoodWineTime = function (date: Date): boolean {
 };
 
 const addDisneylandAttractions = async function (
-  attractions: Attraction[],
-  date: Date
-): Promise<Attraction[]> {
+  attractions: ReadonlyArray<Attraction>,
+  date: Date,
+): Promise<ReadonlyArray<Attraction>> {
   attractions = [
     ...attractions,
     createDLRNewAttraction({
@@ -730,9 +730,9 @@ const addDisneylandAttractions = async function (
 };
 
 const addDCAAttractions = async function (
-  attractions: Attraction[],
-  date: Date
-): Promise<Attraction[]> {
+  attractions: ReadonlyArray<Attraction>,
+  date: Date,
+): Promise<ReadonlyArray<Attraction>> {
   attractions = [
     ...attractions,
 
@@ -1188,8 +1188,8 @@ const addDCAAttractions = async function (
 };
 
 const addDTDAttractions = async function (
-  attractions: Attraction[]
-): Promise<Attraction[]> {
+  attractions: ReadonlyArray<Attraction>,
+): Promise<ReadonlyArray<Attraction>> {
   attractions = [
     ...attractions,
     createDTDNewAttraction({
@@ -1232,9 +1232,9 @@ const addDTDAttractions = async function (
 
 export const getHardcodedParkData = async function (props: {
   date: Date;
-}): Promise<Attraction[]> {
+}): Promise<ReadonlyArray<Attraction>> {
   const { date } = props;
-  let at: Attraction[] = [];
+  let at: ReadonlyArray<Attraction> = [];
 
   at = await addDisneylandAttractions(at, date);
   at = await addDCAAttractions(at, date);

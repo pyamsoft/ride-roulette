@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,5 +19,5 @@ import { Attraction } from "../model/Attraction";
 export interface DisneylandInteractor {
   objectType: "DisneylandInteractor";
 
-  getAttractions: (data: { date: Date }) => Promise<Attraction[]>;
+  getAttractions: (data: { date: Date }) => Promise<ReadonlyArray<Attraction>>;
 }

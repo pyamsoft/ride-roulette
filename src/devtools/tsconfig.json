@@ -17,7 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
-    "noImplicitThis": true,
+    "noImplicitThis": true
   },
-  "include": ["./"],
+  "include": ["./"]
 }

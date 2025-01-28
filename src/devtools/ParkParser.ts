@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 pyamsoft
+ * Copyright 2025 pyamsoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ module.exports = {
     const rides: P[] = j.results.map(
       (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        r: any
+        r: any,
       ) => {
         return {
           id: r.id,
@@ -69,24 +69,24 @@ module.exports = {
             r.locationName === "Disneyland Park"
               ? Park.DISNEYLAND
               : r.locationName === "Disney California Adventure Park"
-              ? Park.CALIFORNIA_ADVENTURE
-              : Park.DOWNTOWN_DISNEY,
+                ? Park.CALIFORNIA_ADVENTURE
+                : Park.DOWNTOWN_DISNEY,
         };
-      }
+      },
     );
 
     console.log(
-      `${rides.filter((r) => r.park === Park.DISNEYLAND).map(rideString)}`
+      `${rides.filter((r) => r.park === Park.DISNEYLAND).map(rideString)}`,
     );
 
     console.log(
       `${rides
         .filter((r) => r.park === Park.CALIFORNIA_ADVENTURE)
-        .map(rideString)}`
+        .map(rideString)}`,
     );
 
     console.log(
-      `${rides.filter((r) => r.park === Park.DOWNTOWN_DISNEY).map(rideString)}`
+      `${rides.filter((r) => r.park === Park.DOWNTOWN_DISNEY).map(rideString)}`,
     );
   },
 };
