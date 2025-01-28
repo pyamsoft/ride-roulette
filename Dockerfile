@@ -14,7 +14,7 @@ COPY vite.config.ts ./
 COPY public ./public
 COPY src ./src
 COPY index.html ./
-COPY .eslintrc.cjs ./
+COPY eslintrc.config.mjs ./
 
 # Enable corepack
 RUN corepack enable
