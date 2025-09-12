@@ -28,14 +28,14 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { CellComponentProps } from "react-window";
+import { CellComponentProps, GridImperativeAPI } from "react-window";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { DarkMode, LightMode } from "@mui/icons-material";
 import ReactConfetti from "react-confetti";
 import { RideCard } from "./RideCard";
 import { Selectors } from "./RouletteInterfaces";
 import { ActionSection } from "./Selectors";
-import { HorizontalList, HorizontalListApi } from "./HorizontalList";
+import { HorizontalList } from "./HorizontalList";
 
 const useToggle = function (callback: Dispatch<React.SetStateAction<boolean>>) {
   return React.useCallback(() => {
@@ -249,7 +249,7 @@ export const RoulettePage: React.FunctionComponent<RouletteProps> = function (
   );
 
   // Grab the ref for causing random spins
-  const listRef = React.useRef<HorizontalListApi>(undefined);
+  const listRef = React.useRef<GridImperativeAPI>(undefined);
 
   // Grab window size for confetti and list sizing
   const { width, height } = useWindowSize();
@@ -312,7 +312,7 @@ const APP_BAR = {
 };
 
 const useSpin = function (
-  listRef: RefObject<HorizontalListApi | undefined>,
+  listRef: RefObject<GridImperativeAPI | undefined>,
   attractions: ReadonlyArray<Attraction>,
   onSelectIndex: (i: number) => void,
 ) {
@@ -332,7 +332,7 @@ const useSpin = function (
       if (index >= 0) {
         const c = listRef.current;
         if (c) {
-          c.scrollToIndex(index);
+          c.scrollToColumn({ index, align: "center" });
           if (final) {
             onSelectIndex(index);
           }
@@ -490,7 +490,7 @@ const ListSection: React.FunctionComponent<{
   spin: boolean;
   width: number;
   height: number;
-  listRef: RefObject<HorizontalListApi | undefined>;
+  listRef: RefObject<GridImperativeAPI | undefined>;
 }> = function (props) {
   const { listRef } = props;
   const { height } = props;

@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-import { Grid, GridImperativeAPI, type GridProps } from "react-window";
+import { Grid, type GridProps } from "react-window";
 import React from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Props = GridProps<any>;
 type ItemProps = Props["cellProps"];
 
-export interface HorizontalListApi {
-  scrollToIndex: (index: number) => void;
-}
-
 export const HorizontalList: React.FunctionComponent<{
-  listRef: React.RefObject<HorizontalListApi | undefined>;
+  listRef: Props["gridRef"];
   itemCount: Props["columnCount"];
   itemHeight: Props["rowHeight"];
   itemWidth: Props["columnWidth"];
@@ -34,22 +30,11 @@ export const HorizontalList: React.FunctionComponent<{
   itemProps: ItemProps;
 }> = function (props) {
   const { listRef, itemCount, itemHeight, itemWidth, itemProps, item } = props;
-  const handleGridRef = React.useCallback(
-    (ref: GridImperativeAPI | undefined | null) => {
-      listRef.current = ref
-        ? ({
-            scrollToIndex: (index: number) => {
-              ref.scrollToColumn({ index, align: "center" });
-            },
-          } satisfies HorizontalListApi)
-        : undefined;
-    },
-    [listRef],
-  );
+
   return (
     <Grid
       className="no-visual-scrollbar"
-      gridRef={handleGridRef}
+      gridRef={listRef}
       rowCount={1}
       rowHeight={itemHeight}
       columnCount={itemCount}
