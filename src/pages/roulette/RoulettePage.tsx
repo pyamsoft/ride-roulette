@@ -28,13 +28,14 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { FixedSizeList } from "react-window";
+import { CellComponentProps } from "react-window";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { DarkMode, LightMode } from "@mui/icons-material";
 import ReactConfetti from "react-confetti";
 import { RideCard } from "./RideCard";
 import { Selectors } from "./RouletteInterfaces";
 import { ActionSection } from "./Selectors";
+import { HorizontalList, HorizontalListApi } from "./HorizontalList";
 
 const useToggle = function (callback: Dispatch<React.SetStateAction<boolean>>) {
   return React.useCallback(() => {
@@ -127,90 +128,91 @@ const useAttractions = function (
   typeIncludeQuickEat: boolean,
 ) {
   const attractions = useAtomValue(AttractionList);
-  const filteredAttractions = React.useMemo(() => {
-    return attractions
-      .filter((a) => {
-        if (!parkIncludeDCA) {
-          return a.park !== ThemePark.CALIFORNIA_ADVENTURE;
-        }
 
-        return true;
-      })
-      .filter((a) => {
-        if (!parkIncludeDisney) {
-          return a.park !== ThemePark.DISNEYLAND;
-        }
+  const handleFilterAttractions = React.useCallback(
+    (attractions: ReadonlyArray<Attraction>) => {
+      return attractions
+        .filter((a) => {
+          if (!parkIncludeDCA) {
+            return a.park !== ThemePark.CALIFORNIA_ADVENTURE;
+          }
 
-        return true;
-      })
-      .filter((a) => {
-        if (!parkIncludeDTD) {
-          return a.park !== ThemePark.DOWNTOWN_DISNEY;
-        }
+          return true;
+        })
+        .filter((a) => {
+          if (!parkIncludeDisney) {
+            return a.park !== ThemePark.DISNEYLAND;
+          }
 
-        return true;
-      })
-      .filter((a) => {
-        if (!typeIncludeRides) {
-          return a.type !== AttractionType.RIDE;
-        }
+          return true;
+        })
+        .filter((a) => {
+          if (!parkIncludeDTD) {
+            return a.park !== ThemePark.DOWNTOWN_DISNEY;
+          }
 
-        return true;
-      })
-      .filter((a) => {
-        if (!typeIncludeShows) {
-          return a.type !== AttractionType.SHOW;
-        }
+          return true;
+        })
+        .filter((a) => {
+          if (!typeIncludeRides) {
+            return a.type !== AttractionType.RIDE;
+          }
 
-        return true;
-      })
-      .filter((a) => {
-        if (!typeIncludeMeetGreet) {
-          return a.type !== AttractionType.MEET_GREET;
-        }
+          return true;
+        })
+        .filter((a) => {
+          if (!typeIncludeShows) {
+            return a.type !== AttractionType.SHOW;
+          }
 
-        return true;
-      })
-      .filter((a) => {
-        if (!typeIncludeQuickEat) {
-          return a.type !== AttractionType.QUICK_EAT;
-        }
+          return true;
+        })
+        .filter((a) => {
+          if (!typeIncludeMeetGreet) {
+            return a.type !== AttractionType.MEET_GREET;
+          }
 
-        return true;
-      })
-      .filter((a) => {
-        if (!typeIncludeSitEat) {
-          return a.type !== AttractionType.SIT_EAT;
-        }
+          return true;
+        })
+        .filter((a) => {
+          if (!typeIncludeQuickEat) {
+            return a.type !== AttractionType.QUICK_EAT;
+          }
 
-        return true;
-      });
-  }, [
-    attractions,
-    parkIncludeDCA,
-    parkIncludeDisney,
-    parkIncludeDTD,
-    typeIncludeRides,
-    typeIncludeShows,
-    typeIncludeMeetGreet,
-    typeIncludeQuickEat,
-    typeIncludeSitEat,
-  ]);
+          return true;
+        })
+        .filter((a) => {
+          if (!typeIncludeSitEat) {
+            return a.type !== AttractionType.SIT_EAT;
+          }
 
-  return React.useMemo(() => {
-    let result = filteredAttractions;
+          return true;
+        });
+    },
+    [
+      parkIncludeDCA,
+      parkIncludeDisney,
+      parkIncludeDTD,
+      typeIncludeRides,
+      typeIncludeShows,
+      typeIncludeMeetGreet,
+      typeIncludeQuickEat,
+      typeIncludeSitEat,
+    ],
+  );
 
-    // Make sure there is enough to loopy loopy
-    if (result.length <= 0) {
-      return [];
-    }
+  let result = handleFilterAttractions(attractions);
 
+  // Make sure there is enough to loopy loopy
+  if (result.length <= 0) {
+    return [];
+  } else {
     // If the list isnt big enough for a nice animation, double it up
     while (result.length <= 10) {
       result = [...result, ...result];
     }
     return result;
-  }, [filteredAttractions]);
+  }
 };
 
 interface RouletteProps {
@@ -247,7 +249,7 @@ export const RoulettePage: React.FunctionComponent<RouletteProps> = function (
   );
 
   // Grab the ref for causing random spins
-  const listRef = React.useRef<FixedSizeList>(null);
+  const listRef = React.useRef<HorizontalListApi>(undefined);
 
   // Grab window size for confetti and list sizing
   const { width, height } = useWindowSize();
@@ -310,7 +312,7 @@ const APP_BAR = {
 };
 
 const useSpin = function (
-  listRef: RefObject<FixedSizeList | null>,
+  listRef: RefObject<HorizontalListApi | undefined>,
   attractions: ReadonlyArray<Attraction>,
   onSelectIndex: (i: number) => void,
 ) {
@@ -330,7 +332,7 @@ const useSpin = function (
       if (index >= 0) {
         const c = listRef.current;
         if (c) {
-          c.scrollToItem(index, "center");
+          c.scrollToIndex(index);
           if (final) {
             onSelectIndex(index);
           }
@@ -458,50 +460,53 @@ const TopBar: React.FunctionComponent<RouletteProps> = function (props) {
   );
 };
 
+const AttractionCard = ({
+  columnIndex,
+  style,
+  spin,
+  selectedIndex,
+  attractionList,
+}: CellComponentProps<{
+  spin: boolean;
+  selectedIndex: number;
+  attractionList: ReadonlyArray<Attraction>;
+}>) => {
+  return (
+    <Box style={style}>
+      <Stack direction="column" width="100%" height="100%" px={2}>
+        <RideCard
+          spin={spin}
+          glow={selectedIndex === columnIndex}
+          attraction={attractionList[columnIndex % attractionList.length]}
+        />
+      </Stack>
+    </Box>
+  );
+};
+
 const ListSection: React.FunctionComponent<{
   selectedIndex: number;
   attractionList: ReadonlyArray<Attraction>;
   spin: boolean;
   width: number;
   height: number;
-  listRef: RefObject<FixedSizeList | null>;
+  listRef: RefObject<HorizontalListApi | undefined>;
 }> = function (props) {
-  const { spin } = props;
   const { listRef } = props;
-  const { width, height } = props;
-  const { selectedIndex, attractionList } = props;
+  const { height } = props;
 
-  const Column = (listProps: { index: number; style: object }) => {
-    const { style, index } = listProps;
-    return (
-      <Box style={style}>
-        <Stack direction="column" width="100%" height="100%" px={2}>
-          <RideCard
-            spin={spin}
-            glow={selectedIndex === index}
-            attraction={attractionList[index % attractionList.length]}
-          />
-        </Stack>
-      </Box>
-    );
-  };
-
+  const { width, spin, selectedIndex, attractionList } = props;
   return (
     <Box width="100%">
       {attractionList.length > 0 ? (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        <FixedSizeList
-          ref={listRef}
-          className="no-visual-scrollbar"
-          layout="horizontal"
-          itemSize={Math.min(width, CARD_WIDTH)}
-          height={CARD_HEIGHT}
+        <HorizontalList
+          listRef={listRef}
           itemCount={attractionList.length}
-          width={width}
-        >
-          {Column}
-        </FixedSizeList>
+          itemHeight={CARD_HEIGHT}
+          itemWidth={Math.min(width, CARD_WIDTH)}
+          item={AttractionCard}
+          itemProps={{ spin, selectedIndex, attractionList }}
+        />
       ) : (
         <Stack direction="column" width={width} height={height / 2}>
           <Box m="auto" p={2}>

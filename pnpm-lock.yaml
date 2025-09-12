@@ -72,9 +72,6 @@ importers:
       '@types/react-dom':
         specifier: 19.1.9
         version: 19.1.9(@types/react@19.1.13)
-      '@types/react-window':
-        specifier: 1.8.8
-        version: 1.8.8
       '@types/uuid':
         specifier: 10.0.0
         version: 10.0.0
@@ -1078,9 +1075,6 @@ packages:
     resolution: {integrity: sha512-8TV6R3h2j7a91c+1DXdJi3Syo69zzIZbz7Lg5tORM5LEJG7X/E6a1V3drRyBRZq7/utz7A+c4OgYLiLcYGHG6w==}
     peerDependencies:
       '@types/react': '*'
-
-  '@types/react-window@1.8.8':
-    resolution: {integrity: sha512-8Ls660bHR1AUA2kuRvVG9D/4XpRC6wjAaPT9dil7Ckc76eP9TKWZwwmgfq8Q1LANX3QNDnoU4Zp48A3w+zK69Q==}
 
   '@types/react@19.1.13':
     resolution: {integrity: sha512-hHkbU/eoO3EG5/MZkuFSKmYqPbSVk5byPFa3e7y/8TybHiLMACgI8seVYlicwk7H5K/rI2px9xrQp/C+AUDTiQ==}
@@ -3637,10 +3631,6 @@ snapshots:
       '@types/react': 19.1.13
 
   '@types/react-transition-group@4.4.12(@types/react@19.1.13)':
-    dependencies:
-      '@types/react': 19.1.13
-
-  '@types/react-window@1.8.8':
     dependencies:
       '@types/react': 19.1.13
 

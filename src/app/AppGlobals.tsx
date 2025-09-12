@@ -17,12 +17,17 @@
 import { useSetAtom } from "jotai";
 import { DefaultObjectGraph } from "./AppAtoms";
 import { ObjectGraph } from "../arch/ObjectGraph";
-import React from "react";
 import { createAppObjectGraph } from "./AppObjectGraph";
+
+let _graph: ObjectGraph | undefined;
+const getGraph = function (): ObjectGraph {
+  if (!_graph) {
+    _graph = createAppObjectGraph();
+  }
+  return _graph;
+};
 
 export const useInstallAppGlobals = function () {
   const graphSetter = useSetAtom(DefaultObjectGraph);
-
-  const graph: ObjectGraph = React.useMemo(() => createAppObjectGraph(), []);
-  graphSetter(graph);
+  graphSetter(getGraph());
 };
