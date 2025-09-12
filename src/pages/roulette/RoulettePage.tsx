@@ -249,7 +249,7 @@ export const RoulettePage: React.FunctionComponent<RouletteProps> = function (
   );
 
   // Grab the ref for causing random spins
-  const listRef = React.useRef<GridImperativeAPI>(undefined);
+  const listRef = React.useRef<GridImperativeAPI>(null);
 
   // Grab window size for confetti and list sizing
   const { width, height } = useWindowSize();
@@ -312,7 +312,7 @@ const APP_BAR = {
 };
 
 const useSpin = function (
-  listRef: RefObject<GridImperativeAPI | undefined>,
+  listRef: RefObject<GridImperativeAPI | null>,
   attractions: ReadonlyArray<Attraction>,
   onSelectIndex: (i: number) => void,
 ) {
@@ -490,7 +490,7 @@ const ListSection: React.FunctionComponent<{
   spin: boolean;
   width: number;
   height: number;
-  listRef: RefObject<GridImperativeAPI | undefined>;
+  listRef: RefObject<GridImperativeAPI | null>;
 }> = function (props) {
   const { listRef } = props;
   const { height } = props;

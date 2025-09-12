@@ -16,8 +16,8 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "$npm_execpath run lint && tsc && vite build",
-    "lint": "$npm_execpath run eslint && $npm_execpath run stylelint",
+    "build": "$npm_execpath run lint && vite build",
+    "lint": "$npm_execpath run eslint && $npm_execpath run stylelint && tsc",
     "eslint": "eslint --report-unused-disable-directives --max-warnings 0 .",
     "stylelint": "stylelint 'src/**/*.css'",
     "just-preview": "vite preview",
