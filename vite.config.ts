@@ -17,11 +17,22 @@
 import { defineConfig } from "vitest/config";
 import { UserConfigExport } from "vite";
 import react from "@vitejs/plugin-react";
+import type { PluginOptions } from "babel-plugin-react-compiler";
+
+const ReactCompilerConfig: Partial<PluginOptions> = {
+  target: "19",
+};
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const baseConfig: UserConfigExport = {
-    plugins: [react()],
+    plugins: [
+      react({
+        babel: {
+          plugins: ["babel-plugin-react-compiler", ReactCompilerConfig],
+        },
+      }),
+    ],
   };
 
   const isProduction = mode === "production";
@@ -39,28 +50,6 @@ export default defineConfig(({ mode }) => {
       sourcemap: isProduction,
       minify: isProduction,
       cssMinify: isProduction,
-      rollupOptions: {
-        output: {
-          manualChunks: (id) => {
-            // Split up the JS code into chunks
-            if (id.includes("/node_modules")) {
-              // mui can be its own chunk, split further into mini-chunks
-              if (id.includes("@mui")) {
-                if (id.includes("@mui/x-date-pickers")) {
-                  return "vendor_mui_x_date_pickers";
-                } else if (id.includes("@mui/icons-material")) {
-                  return "vendor_mui_icons_material";
-                }
-                return "vendor_mui";
-              }
-            }
-
-            // Otherwise we fall back to the splitVendorChunkPlugin, which
-            // also handles our src code splitting
-            return undefined;
-          },
-        },
-      },
     },
   };
 });
