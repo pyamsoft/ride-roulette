@@ -17,6 +17,7 @@
 import { Grid, GridImperativeAPI, type GridProps } from "react-window";
 import React from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Props = GridProps<any>;
 type ItemProps = Props["cellProps"];
 
@@ -35,15 +36,13 @@ export const HorizontalList: React.FunctionComponent<{
   const { listRef, itemCount, itemHeight, itemWidth, itemProps, item } = props;
   const handleGridRef = React.useCallback(
     (ref: GridImperativeAPI | undefined | null) => {
-      if (!ref) {
-        listRef.current = undefined;
-      } else {
-        listRef.current = {
-          scrollToIndex: (index: number) => {
-            ref.scrollToColumn({ index, align: "center" });
-          },
-        } satisfies HorizontalListApi;
-      }
+      listRef.current = ref
+        ? ({
+            scrollToIndex: (index: number) => {
+              ref.scrollToColumn({ index, align: "center" });
+            },
+          } satisfies HorizontalListApi)
+        : undefined;
     },
     [listRef],
   );
