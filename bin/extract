@@ -58,3 +58,6 @@ main() {
     --mount type=bind,source="${_dist}",target=/output \
     localhost/pyamsoft/ride-roulette:latest
 }
+
+main "$@" || exit 1
+exit 0
