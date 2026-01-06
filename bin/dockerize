@@ -16,16 +16,40 @@
 # limitations under the License.
 #
 
-_cmd="sudo docker"
-if command -v podman >/dev/null; then
-  _cmd="podman"
-fi
+readonly NAME="dockerize"
+readonly CONTAINER="pyamsoft/ride-roulette"
 
-# shellcheck disable=SC2086
-exec ${_cmd} build . \
-  -t pyamsoft/ride-roulette \
-  -f ./Dockerfile \
-  --rm \
-  --layers \
-  --force-rm \
-  "$@"
+BIN_DIR="$(dirname "$(realpath "$0")")"
+ROOT_DIR="$(realpath "${BIN_DIR}/..")"
+unset BIN_DIR
+readonly ROOT_DIR
+
+_log() {
+  _msg="$1"
+  shift
+
+  printf -- "[%s] ${_msg}\n" "${NAME}" "$@"
+
+  unset _msg
+  return 0
+}
+
+main() {
+
+  _cmd="sudo docker"
+  if command -v podman >/dev/null; then
+    _cmd="podman"
+  fi
+
+  _log 'Dockerizing %s' "${CONTAINER}"
+  exec ${_cmd} build "${ROOT_DIR}" \
+    -t "${CONTAINER}" \
+    -f "${ROOT_DIR}/Dockerfile" \
+    --rm \
+    --layers \
+    --force-rm \
+    "$@"
+}
+
+main "$@" || exit 1
+exit 0

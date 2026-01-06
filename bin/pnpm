@@ -16,14 +16,12 @@
 # limitations under the License.
 #
 
-readonly NAME="extract"
+readonly NAME="setup"
 
 BIN_DIR="$(dirname "$(realpath "$0")")"
 ROOT_DIR="$(realpath "${BIN_DIR}/..")"
-unset BIN_DIR
+readonly BIN_DIR
 readonly ROOT_DIR
-
-_dist="${ROOT_DIR}/dist"
 
 _log() {
   _msg="$1"
@@ -36,25 +34,30 @@ _log() {
 }
 
 main() {
-  rm -rf "${_dist}" || {
-    printf -- 'Failed to prune old extraction directory: %s' "${_dist}"
+  if ! command -v corepack >/dev/null 2>&1; then
+    _log 'You must install "corepack"'
     return 1
-  }
-
-  mkdir -p "${_dist}" || {
-    _log 'Failed to create extraction target directory: %s' "${_dist}"
-    return 1
-  }
-
-  _cmd="docker"
-  if command -v podman >/dev/null; then
-    _cmd="podman"
   fi
 
-  exec "${_cmd}" run \
-    --rm -i -t \
-    --security-opt no-new-privileges:true \
-    --cap-drop ALL \
-    --mount type=bind,source="${_dist}",target=/output \
-    localhost/pyamsoft/ride-roulette:latest
+  cd "${ROOT_DIR}" || {
+    _log 'Failed to move into project root: %s' "${ROOT_DIR}"
+    return 1
+  }
+
+  _corepack_target="${ROOT_DIR}/lib"
+  _pnpm="${_corepack_target}/pnpm"
+  if [ ! -d "${_corepack_target}" ] || [ ! -x "${_pnpm}" ]; then
+    _log 'Corepack install is missing. Running setup...'
+    if [ -x "${BIN_DIR}/setup" ]; then
+      "${BIN_DIR}/setup" || {
+        _log 'Failed running local setup.'
+        return 1
+      }
+    fi
+  fi
+
+  exec "${_pnpm}" "$@"
 }
+
+main "$@" || exit 1
+exit 0
