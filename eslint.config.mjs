@@ -18,6 +18,7 @@ import tseslint from "typescript-eslint";
 import js from "@eslint/js";
 import globals from "globals";
 
+import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import reactCompiler from "eslint-plugin-react-compiler";
@@ -25,13 +26,26 @@ import reactCompiler from "eslint-plugin-react-compiler";
 export default tseslint.config(
   { ignores: ["dist"] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+      react.configs.flat.recommended,
+    ],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
+      ...react.configs.flat.recommended.languageOptions,
       ecmaVersion: "latest",
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+      },
+    },
+    settings: {
+      react: {
+        version: "19",
+      },
     },
     plugins: {
+      react,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       "react-compiler": reactCompiler,
