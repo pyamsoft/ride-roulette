@@ -3,7 +3,7 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
 
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "DOM.AsyncIterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
 
@@ -22,7 +22,10 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
-    "noImplicitThis": true
+    "noImplicitThis": true,
+
+    /* Types */
+    "types": ["@types/node"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

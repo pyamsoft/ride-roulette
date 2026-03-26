@@ -201,18 +201,20 @@ const useAttractions = function (
     ],
   );
 
-  let result = handleFilterAttractions(attractions);
+  return React.useMemo(() => {
+    let result = handleFilterAttractions(attractions);
 
-  // Make sure there is enough to loopy loopy
-  if (result.length <= 0) {
-    return [];
-  } else {
-    // If the list isnt big enough for a nice animation, double it up
-    while (result.length <= 10) {
-      result = [...result, ...result];
+    // Make sure there is enough to loopy loopy
+    if (result.length <= 0) {
+      return [];
+    } else {
+      // If the list isnt big enough for a nice animation, double it up
+      while (result.length <= 10) {
+        result = [...result, ...result];
+      }
+      return result;
     }
-    return result;
-  }
+  }, [handleFilterAttractions, attractions]);
 };
 
 interface RouletteProps {
