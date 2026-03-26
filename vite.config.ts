@@ -16,21 +16,20 @@
 
 import { defineConfig } from "vitest/config";
 import { UserConfigExport } from "vite";
-import react from "@vitejs/plugin-react";
-import type { PluginOptions } from "babel-plugin-react-compiler";
-
-const ReactCompilerConfig: Partial<PluginOptions> = {
-  target: "19",
-};
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import babel from "@rolldown/plugin-babel";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const baseConfig: UserConfigExport = {
     plugins: [
-      react({
-        babel: {
-          plugins: [["babel-plugin-react-compiler", ReactCompilerConfig]],
-        },
+      react(),
+      babel({
+        presets: [
+          reactCompilerPreset({
+            target: "19",
+          }),
+        ],
       }),
     ],
   };
