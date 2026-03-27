@@ -27,14 +27,25 @@ export default tseslint.config(
   { ignores: ["dist"] },
   {
     extends: [
+      // JS
       js.configs.recommended,
+      // TS
       ...tseslint.configs.recommended,
+      // React
       react.configs.flat.recommended,
+      react.configs.flat["jsx-runtime"],
+
+      // React Hooks
+      reactHooks.configs.flat.recommended,
+
+      // Hot Reload
+      reactRefresh.configs.vite,
+
+      // React Compiler
+      reactCompiler.configs.recommended,
     ],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
-      ...react.configs.flat.recommended.languageOptions,
-      ecmaVersion: "latest",
       globals: {
         ...globals.browser,
       },
@@ -43,22 +54,6 @@ export default tseslint.config(
       react: {
         version: "19",
       },
-    },
-    plugins: {
-      react,
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-      "react-compiler": reactCompiler,
-    },
-    rules: {
-      ...react.configs.recommended.rules,
-      ...react.configs["jsx-runtime"].rules,
-      ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
-      "react-compiler/react-compiler": "error",
     },
   },
 );
