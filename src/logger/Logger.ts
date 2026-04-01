@@ -48,7 +48,7 @@ export const newLogger = function (tag: string): Logger {
       if (AppEnvironment.IS_DEV) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const e = err as any;
-        if (e.code && e.stack && e.name === "AxiosError") {
+        if (e.code && e.stack) {
           const { stack, ...rest } = e;
           console.error(appTag, myTag, stack, ...args, rest);
         } else {
