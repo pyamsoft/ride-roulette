@@ -53,6 +53,34 @@ const useParkToName = function (park: ThemePark): string {
   }, [park]);
 };
 
+const BOX_SX: SxProps = {
+  border: 8,
+  borderColor: "background.default",
+  borderRadius: CARD_BORDER_RADIUS + 2,
+  width: "100%",
+  height: "100%",
+};
+
+const CARD_STACK_SX: SxProps = {
+  width: "100%",
+  height: "100%",
+};
+
+const INNER_CARD_STACK_SX: SxProps = {
+  p: 2,
+  width: "100%",
+};
+
+const PARK_TEXT_SX: SxProps = {
+  fontWeight: 700,
+  color: "text.secondary",
+};
+
+const ATTRACTION_TEXT_SX: SxProps = {
+  fontWeight: 700,
+  color: "text.primary",
+};
+
 export const RideCard: React.FunctionComponent<{
   spin: boolean;
   attraction: Attraction;
@@ -78,14 +106,10 @@ export const RideCard: React.FunctionComponent<{
 
   return (
     <Box
-      border={8}
-      borderColor="background.default"
-      borderRadius={CARD_BORDER_RADIUS + 2}
-      width="100%"
-      height="100%"
       className={glow ? "selected-border" : undefined}
       onMouseEnter={handleMouseIn}
       onMouseLeave={handleMouseOut}
+      sx={BOX_SX}
     >
       <Card variant="elevation" sx={CARD_SX} elevation={hover ? 3 : 1}>
         <ListItemButton
@@ -95,23 +119,19 @@ export const RideCard: React.FunctionComponent<{
           disabled={spin}
           sx={BUTTON_SX}
         >
-          <Stack direction="column" width="100%" height="100%">
+          <Stack direction="column" sx={CARD_STACK_SX}>
             <img
               src={attraction.imageUrl}
               alt={attraction.name}
               width="100%"
               height="auto"
             />
-            <Stack direction="column" p={2} width="100%">
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                fontWeight={700}
-              >
+            <Stack direction="column" sx={INNER_CARD_STACK_SX}>
+              <Typography variant="caption" sx={PARK_TEXT_SX}>
                 {park}
               </Typography>
 
-              <Typography variant="h6" color="text.primary" fontWeight={700}>
+              <Typography variant="h6" sx={ATTRACTION_TEXT_SX}>
                 {attraction.name}
               </Typography>
             </Stack>

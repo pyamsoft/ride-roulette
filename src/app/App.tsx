@@ -16,7 +16,13 @@
 
 import React from "react";
 import { useInstallAppGlobals } from "./AppGlobals";
-import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  Box,
+  createTheme,
+  CssBaseline,
+  SxProps,
+  ThemeProvider,
+} from "@mui/material";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { useDarkMode } from "../hooks/useDarkMode";
 import { SplashPage } from "../pages/splash/SplashPage";
@@ -93,18 +99,22 @@ export const App: React.FunctionComponent = function () {
     handleLoadAttractions();
   }, [firstMount, handleLoadAttractions]);
 
+  const boxSx: SxProps = React.useMemo(() => {
+    return {
+      width,
+      minWidth: width,
+      maxWidth: width,
+      height,
+      minHeight: height,
+      maxHeight: height,
+      bgcolor: "background.default",
+    };
+  }, [width, height]);
+
   return (
     <CssBaseline>
       <ThemeProvider theme={theme}>
-        <Box
-          width={width}
-          minWidth={width}
-          maxWidth={width}
-          height={height}
-          minHeight={height}
-          maxHeight={height}
-          bgcolor="background.default"
-        >
+        <Box sx={boxSx}>
           <RoulettePage isDark={isDark} onDarkModeToggled={onDarkModeToggled} />
 
           <SplashPage

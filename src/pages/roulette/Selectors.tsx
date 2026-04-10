@@ -21,20 +21,33 @@ import {
   Checkbox,
   Container,
   FormControlLabel,
+  FormControlLabelProps,
   Stack,
+  SxProps,
   Typography,
-  TypographyProps,
 } from "@mui/material";
 import { ActionProps, Selectors } from "./RouletteInterfaces";
 
 /**
  * Checkbox label props
  */
-const LABEL_PROPS = {
+const LABEL_PROPS: FormControlLabelProps["slotProps"] = {
   typography: {
-    color: "text.secondary",
     variant: "caption",
-  } as TypographyProps,
+    sx: {
+      color: "text.secondary",
+    },
+  },
+};
+
+const RIDE_STACK_SX: SxProps = {
+  width: "50%",
+  height: "100%",
+};
+
+const TITLE_SX: SxProps = {
+  fontWeight: 700,
+  color: "text.secondary",
 };
 
 const RideSelectors: React.FunctionComponent<ActionProps & Selectors> =
@@ -51,12 +64,12 @@ const RideSelectors: React.FunctionComponent<ActionProps & Selectors> =
     } = props;
     const { spin } = props;
     return (
-      <Stack direction="column" width="50%" height="100%">
-        <Typography variant="body2" color="text.secondary" fontWeight={700}>
+      <Stack direction="column" sx={RIDE_STACK_SX}>
+        <Typography variant="body2" sx={TITLE_SX}>
           Parks
         </Typography>
         <FormControlLabel
-          componentsProps={LABEL_PROPS}
+          slotProps={LABEL_PROPS}
           disabled={spin}
           onChange={spin ? undefined : onToggleParkDisney}
           control={<Checkbox checked={parkIncludeDisney} />}
@@ -64,7 +77,7 @@ const RideSelectors: React.FunctionComponent<ActionProps & Selectors> =
         />
 
         <FormControlLabel
-          componentsProps={LABEL_PROPS}
+          slotProps={LABEL_PROPS}
           disabled={spin}
           onChange={spin ? undefined : onToggleParkDCA}
           control={<Checkbox checked={parkIncludeDCA} />}
@@ -72,7 +85,7 @@ const RideSelectors: React.FunctionComponent<ActionProps & Selectors> =
         />
 
         <FormControlLabel
-          componentsProps={LABEL_PROPS}
+          slotProps={LABEL_PROPS}
           disabled={spin}
           onChange={spin ? undefined : onToggleParkDTD}
           control={<Checkbox checked={parkIncludeDTD} />}
@@ -102,12 +115,12 @@ const TypeSelectors: React.FunctionComponent<ActionProps & Selectors> =
     } = props;
     const { spin } = props;
     return (
-      <Stack direction="column" width="50%" height="100%">
-        <Typography variant="body2" color="text.secondary" fontWeight={700}>
+      <Stack direction="column" sx={RIDE_STACK_SX}>
+        <Typography variant="body2" sx={TITLE_SX}>
           Experiences
         </Typography>
         <FormControlLabel
-          componentsProps={LABEL_PROPS}
+          slotProps={LABEL_PROPS}
           disabled={spin}
           onChange={spin ? undefined : onToggleTypeRides}
           control={<Checkbox checked={typeIncludeRides} />}
@@ -115,7 +128,7 @@ const TypeSelectors: React.FunctionComponent<ActionProps & Selectors> =
         />
 
         <FormControlLabel
-          componentsProps={LABEL_PROPS}
+          slotProps={LABEL_PROPS}
           disabled={spin}
           onChange={spin ? undefined : onToggleTypeShows}
           control={<Checkbox checked={typeIncludeShows} />}
@@ -123,7 +136,7 @@ const TypeSelectors: React.FunctionComponent<ActionProps & Selectors> =
         />
 
         <FormControlLabel
-          componentsProps={LABEL_PROPS}
+          slotProps={LABEL_PROPS}
           disabled={spin}
           onChange={spin ? undefined : onToggleTypeMeetGreet}
           control={<Checkbox checked={typeIncludeMeetGreet} />}
@@ -131,7 +144,7 @@ const TypeSelectors: React.FunctionComponent<ActionProps & Selectors> =
         />
 
         <FormControlLabel
-          componentsProps={LABEL_PROPS}
+          slotProps={LABEL_PROPS}
           disabled={spin}
           onChange={spin ? undefined : onToggleTypeQuickEat}
           control={<Checkbox checked={typeIncludeQuickEat} />}
@@ -139,7 +152,7 @@ const TypeSelectors: React.FunctionComponent<ActionProps & Selectors> =
         />
 
         <FormControlLabel
-          componentsProps={LABEL_PROPS}
+          slotProps={LABEL_PROPS}
           disabled={spin}
           onChange={spin ? undefined : onToggleTypeSitEat}
           control={<Checkbox checked={typeIncludeSitEat} />}
@@ -149,22 +162,40 @@ const TypeSelectors: React.FunctionComponent<ActionProps & Selectors> =
     );
   };
 
+const SELECTOR_PROPS: SxProps = {
+  pb: 2,
+};
+
+const ACTION_PROPS: SxProps = {
+  width: "100%",
+  pb: 2,
+};
+
 const ContentSelectors: React.FunctionComponent<ActionProps & Selectors> =
   function (props) {
     return (
-      <Stack direction="row" pb={2}>
+      <Stack direction="row" sx={SELECTOR_PROPS}>
         <RideSelectors {...props} />
         <TypeSelectors {...props} />
       </Stack>
     );
   };
 
+const ACTION_BOX_SX: SxProps = {
+  mx: "auto",
+};
+
+const ACTION_TEXT_SX: SxProps = {
+  textAlign: "center",
+  color: "text.secondary",
+};
+
 export const ActionSection: React.FunctionComponent<ActionProps & Selectors> =
   function (props) {
     const { spin, onSpin } = props;
     return (
       <Container maxWidth="md">
-        <Stack direction="column" width="100%" pb={2}>
+        <Stack direction="column" sx={ACTION_PROPS}>
           <ContentSelectors {...props} />
           <Button
             variant="contained"
@@ -175,12 +206,8 @@ export const ActionSection: React.FunctionComponent<ActionProps & Selectors> =
             {spin ? "Spinning..." : "Spin!"}
           </Button>
 
-          <Box mx="auto">
-            <Typography
-              variant="caption"
-              textAlign="center"
-              color="text.secondary"
-            >
+          <Box sx={ACTION_BOX_SX}>
+            <Typography variant="caption" sx={ACTION_TEXT_SX}>
               This Application is not affiliated with Disney company. All
               product names, logos, and brands are property of their respective
               owners.

@@ -25,6 +25,7 @@ import {
   Divider,
   IconButton,
   Stack,
+  SxProps,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -222,6 +223,25 @@ interface RouletteProps {
   onDarkModeToggled: () => void;
 }
 
+const ROULETTE_PAGE_SX: SxProps = {
+  width: "100%",
+  height: "100%",
+  overflow: "hidden",
+  position: "relative",
+};
+
+const OVERFLOW_ONLY_Y: SxProps = {
+  overflowX: "hidden",
+  overflowY: "auto",
+  width: "100%",
+  height: "100%",
+};
+
+const BOX_SPACE_SX: SxProps = {
+  flexGrow: 1,
+  py: 2,
+};
+
 export const RoulettePage: React.FunctionComponent<RouletteProps> = function (
   props,
 ) {
@@ -264,7 +284,7 @@ export const RoulettePage: React.FunctionComponent<RouletteProps> = function (
     useConfetti(spin, finalIndex);
 
   return (
-    <Box width="100%" height="100%" overflow="hidden" position="relative">
+    <Box sx={ROULETTE_PAGE_SX}>
       <ReactConfetti
         recycle={continueDroppingConfetti}
         width={width}
@@ -273,7 +293,7 @@ export const RoulettePage: React.FunctionComponent<RouletteProps> = function (
         onConfettiComplete={onConfettiComplete}
       />
 
-      <Stack direction="column" width="100%" height="100%" sx={OVERFLOW_ONLY_Y}>
+      <Stack direction="column" sx={OVERFLOW_ONLY_Y}>
         <TopBar {...props} />
         <ListSection
           spin={spin}
@@ -284,7 +304,7 @@ export const RoulettePage: React.FunctionComponent<RouletteProps> = function (
           attractionList={attractionList}
         />
 
-        <Box flexGrow={1} py={2} />
+        <Box sx={BOX_SPACE_SX} />
 
         <ActionSection {...selectors} spin={spin} onSpin={onSpin} />
       </Stack>
@@ -297,14 +317,6 @@ export const RoulettePage: React.FunctionComponent<RouletteProps> = function (
  */
 const CARD_WIDTH = 400;
 const CARD_HEIGHT = 342;
-
-/**
- * Only allow Y scrolling
- */
-const OVERFLOW_ONLY_Y = {
-  overflowX: "hidden",
-  overflowY: "auto",
-};
 
 /**
  * Color back same as BG instead of slightly-off color
@@ -438,20 +450,38 @@ const useConfetti = function (spin: boolean, selectedIndex: number) {
   };
 };
 
+const TOP_BAR_SX: SxProps = {
+  my: "auto",
+  pl: 2,
+};
+
+const TOP_BAR_TEXT_SX: SxProps = {
+  fontWeight: 700,
+  color: "text.primary",
+};
+
+const TOP_BAR_SPACE_SX: SxProps = {
+  flexGrow: 1,
+};
+
+const TOP_BAR_ICON_SX: SxProps = {
+  my: "auto",
+};
+
 const TopBar: React.FunctionComponent<RouletteProps> = function (props) {
   const { isDark, onDarkModeToggled } = props;
   return (
     <AppBar position="sticky" elevation={0} sx={APP_BAR}>
       <Toolbar>
-        <Box my="auto" pl={2}>
-          <Typography variant="body1" color="text.primary" fontWeight={700}>
+        <Box sx={TOP_BAR_SX}>
+          <Typography variant="body1" sx={TOP_BAR_TEXT_SX}>
             Ride Roulette
           </Typography>
         </Box>
 
-        <Box flexGrow={1} />
+        <Box sx={TOP_BAR_SPACE_SX} />
 
-        <Box my="auto">
+        <Box sx={TOP_BAR_ICON_SX}>
           <IconButton onClick={onDarkModeToggled}>
             {isDark ? <DarkMode /> : <LightMode />}
           </IconButton>
@@ -460,6 +490,12 @@ const TopBar: React.FunctionComponent<RouletteProps> = function (props) {
       <Divider orientation="horizontal" />
     </AppBar>
   );
+};
+
+const ATTRACTION_CARD_SX: SxProps = {
+  width: "100%",
+  height: "100%",
+  px: 2,
 };
 
 const AttractionCard = ({
@@ -475,7 +511,7 @@ const AttractionCard = ({
 }>) => {
   return (
     <Box style={style}>
-      <Stack direction="column" width="100%" height="100%" px={2}>
+      <Stack direction="column" sx={ATTRACTION_CARD_SX}>
         <RideCard
           spin={spin}
           glow={selectedIndex === columnIndex}
@@ -484,6 +520,19 @@ const AttractionCard = ({
       </Stack>
     </Box>
   );
+};
+
+const ATTRACTION_LIST_SX: SxProps = {
+  width: "100%",
+};
+
+const ATTRACTION_EMPTY_SX: SxProps = {
+  m: "auto",
+  p: 2,
+};
+
+const NO_RIDES_SX: SxProps = {
+  color: "text.secondary",
 };
 
 const ListSection: React.FunctionComponent<{
@@ -498,8 +547,16 @@ const ListSection: React.FunctionComponent<{
   const { height } = props;
 
   const { width, spin, selectedIndex, attractionList } = props;
+
+  const attractionEmptyCentered: SxProps = React.useMemo(() => {
+    return {
+      width,
+      height: height / 2,
+    };
+  }, [width, height]);
+
   return (
-    <Box width="100%">
+    <Box sx={ATTRACTION_LIST_SX}>
       {attractionList.length > 0 ? (
         <HorizontalList
           listRef={listRef}
@@ -510,9 +567,9 @@ const ListSection: React.FunctionComponent<{
           itemProps={{ spin, selectedIndex, attractionList }}
         />
       ) : (
-        <Stack direction="column" width={width} height={height / 2}>
-          <Box m="auto" p={2}>
-            <Typography variant="h6" color="text.secondary">
+        <Stack direction="column" sx={attractionEmptyCentered}>
+          <Box sx={ATTRACTION_EMPTY_SX}>
+            <Typography variant="h6" sx={NO_RIDES_SX}>
               No rides to pick from, please select a park
             </Typography>
           </Box>

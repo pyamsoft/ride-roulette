@@ -15,7 +15,30 @@
  */
 
 import React from "react";
-import { Box, Fade, Stack, Typography } from "@mui/material";
+import { Box, Fade, Stack, SxProps, Typography } from "@mui/material";
+
+const STACK_SX: SxProps = {
+  bgcolor: "background.default",
+  width: "100%",
+  height: "100%",
+  position: "fixed",
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  zIndex: 10000,
+};
+
+const BOX_SX: SxProps = {
+  m: "auto",
+  p: 2,
+};
+
+const TITLE_SX: SxProps = {
+  textAlign: "center",
+  fontWeight: 700,
+  color: "text.primary",
+};
 
 export const SplashPage: React.FunctionComponent<{
   loading: boolean;
@@ -31,25 +54,9 @@ export const SplashPage: React.FunctionComponent<{
       appear={false}
       timeout={1600}
     >
-      <Stack
-        bgcolor="background.default"
-        direction="column"
-        width="100%"
-        height="100%"
-        position="fixed"
-        top={0}
-        bottom={0}
-        left={0}
-        right={0}
-        zIndex={10000}
-      >
-        <Box m="auto" p={2}>
-          <Typography
-            variant="h2"
-            fontWeight={700}
-            color="text.primary"
-            textAlign="center"
-          >
+      <Stack direction="column" sx={STACK_SX}>
+        <Box sx={BOX_SX}>
+          <Typography variant="h2" sx={TITLE_SX}>
             Ride Roulette
           </Typography>
         </Box>
