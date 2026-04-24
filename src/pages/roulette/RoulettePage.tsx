@@ -357,27 +357,27 @@ const useSpin = function (
   );
 
   React.useEffect(() => {
-    if (!spin) {
-      setCounter(0);
-      return;
+    let timer: number | undefined;
+    if (spin) {
+      timer = window.setTimeout(
+        () => {
+          setCounter((c) => c + 1);
+          handleScrollToRandomPosition(false);
+        },
+        counter % 2 === 0
+          ? 20
+          : counter % 3 === 0
+            ? 45
+            : counter % 7 === 0
+              ? 10
+              : 32,
+      );
     }
 
-    const timer = window.setTimeout(
-      () => {
-        setCounter((c) => c + 1);
-        handleScrollToRandomPosition(false);
-      },
-      counter % 2 === 0
-        ? 20
-        : counter % 3 === 0
-          ? 45
-          : counter % 7 === 0
-            ? 10
-            : 32,
-    );
-
     return () => {
-      window.clearTimeout(timer);
+      if (timer) {
+        window.clearTimeout(timer);
+      }
     };
   }, [spin, handleScrollToRandomPosition, counter, setCounter]);
 
@@ -388,13 +388,14 @@ const useSpin = function (
 
     const timer = window.setTimeout(() => {
       setSpin(false);
+      setCounter(0);
       handleScrollToRandomPosition(true);
     }, 3 * 1000);
 
     return () => {
       window.clearTimeout(timer);
     };
-  }, [spin, setSpin, handleScrollToRandomPosition]);
+  }, [spin, setSpin, handleScrollToRandomPosition, setCounter]);
 
   return React.useMemo(() => {
     return {
@@ -421,6 +422,7 @@ const useConfetti = function (spin: boolean, selectedIndex: number) {
     }
   }, [finalConfettiRain, setConfettiAllowed, setFinalConfettiRain]);
 
+  // TODO: Eslint complains about setState in effects
   React.useEffect(() => {
     // If we have a selected index we are allowed to show confetti
     if (selectedIndex >= 0) {

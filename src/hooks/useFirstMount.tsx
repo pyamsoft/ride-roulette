@@ -17,11 +17,11 @@
 import React from "react";
 
 export const useFirstMount = function () {
-  const [firstMount, setFirstMount] = React.useState(true);
+  const firstMount = React.useRef(true);
 
   React.useEffect(() => {
-    setFirstMount(false);
-  }, [setFirstMount]);
+    firstMount.current = false;
+  }, [firstMount]);
 
   return firstMount;
 };
