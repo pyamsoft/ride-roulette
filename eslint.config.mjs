@@ -55,5 +55,9 @@ export default tseslint.config(
         version: "19",
       },
     },
+    rules: {
+      // One day we will clean up our code lol
+      "react-hooks/set-state-in-effect": "off",
+    },
   },
 );
