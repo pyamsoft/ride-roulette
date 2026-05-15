@@ -15,16 +15,17 @@
  */
 
 import { defineConfig } from "vitest/config";
-import { UserConfigExport } from "vite";
-import react, { reactCompilerPreset } from "@vitejs/plugin-react";
-import babel from "@rolldown/plugin-babel";
+import { UserConfig } from "vite";
+import pluginReact, { reactCompilerPreset } from "@vitejs/plugin-react";
+import pluginBabel from "@rolldown/plugin-babel";
+import pluginChecker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const baseConfig: UserConfigExport = {
+  const baseConfig: UserConfig = {
     plugins: [
-      react(),
-      babel({
+      pluginReact(),
+      pluginBabel({
         presets: [
           reactCompilerPreset({
             target: "19",
@@ -41,6 +42,22 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       setupFiles: "src/__test__/env/setup.env.ts",
     };
+    const plugins = baseConfig.plugins;
+    if (plugins) {
+      plugins.push(
+        pluginChecker({
+          typescript: true,
+          oxlint: true,
+          stylelint: {
+            lintCommand: "stylelint 'src/**/*.css'",
+          },
+          eslint: {
+            lintCommand:
+              "eslint --report-unused-disable-directives --max-warnings 0 .",
+          },
+        }),
+      );
+    }
   }
 
   return {
