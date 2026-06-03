@@ -18,7 +18,6 @@ import tseslint from "typescript-eslint";
 import js from "@eslint/js";
 import globals from "globals";
 
-import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import reactCompiler from "eslint-plugin-react-compiler";
@@ -31,9 +30,6 @@ export default tseslint.config(
       js.configs.recommended,
       // TS
       ...tseslint.configs.recommended,
-      // React
-      react.configs.flat.recommended,
-      react.configs.flat["jsx-runtime"],
 
       // React Hooks
       reactHooks.configs.flat.recommended,
