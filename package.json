@@ -16,10 +16,10 @@
   },
   "scripts": {
     "start": "vite",
-    "lint:tsc": "tsc --noEmit",
-    "lint:eslint": "eslint --report-unused-disable-directives --max-warnings 0 .",
+    "lint:eslint": "eslint --report-unused-disable-directives --max-warnings 0 --cache --cache-strategy content .",
     "lint:oxlint": "oxlint --deny-warnings .",
     "lint:stylelint": "stylelint 'src/**/*.css'",
+    "lint:tsc": "tsc --strict --noEmit",
     "lint": "$npm_execpath run lint:oxlint && $npm_execpath run lint:tsc && $npm_execpath run lint:stylelint && $npm_execpath run lint:eslint",
     "build": "$npm_execpath run lint && vite build",
     "build:preview": "$npm_execpath run build && $npm_execpath run preview",
