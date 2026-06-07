@@ -121,11 +121,11 @@ importers:
         specifier: 3.8.3
         version: 3.8.3
       stylelint:
-        specifier: 17.12.0
-        version: 17.12.0(typescript@6.0.3)
+        specifier: 17.13.0
+        version: 17.13.0(typescript@6.0.3)
       stylelint-config-standard:
         specifier: 40.0.0
-        version: 40.0.0(stylelint@17.12.0(typescript@6.0.3))
+        version: 40.0.0(stylelint@17.13.0(typescript@6.0.3))
       typescript:
         specifier: 6.0.3
         version: 6.0.3
@@ -137,7 +137,7 @@ importers:
         version: 8.0.16(@types/node@25.9.1)
       vite-plugin-checker:
         specifier: 0.14.1
-        version: 0.14.1(eslint@10.4.1)(meow@14.1.0)(optionator@0.9.4)(oxlint@1.68.0)(stylelint@17.12.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1))
+        version: 0.14.1(eslint@10.4.1)(meow@14.1.0)(optionator@0.9.4)(oxlint@1.68.0)(stylelint@17.13.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1))
       vitest:
         specifier: 4.1.8
         version: 4.1.8(@types/node@25.9.1)(@vitest/coverage-v8@4.1.8)(@vitest/ui@4.1.8)(jsdom@29.1.1)(vite@8.0.16(@types/node@25.9.1))
@@ -406,6 +406,14 @@ packages:
 
   '@csstools/css-syntax-patches-for-csstree@1.1.4':
     resolution: {integrity: sha512-wgsqt92b7C7tQhIdPNxj0n9zuUbQlvAuI1exyzeNrOKOi62SD7ren8zqszmpVREjAOqg8cD2FqYhQfAuKjk4sw==}
+    peerDependencies:
+      css-tree: ^3.2.1
+    peerDependenciesMeta:
+      css-tree:
+        optional: true
+
+  '@csstools/css-syntax-patches-for-csstree@1.1.5':
+    resolution: {integrity: sha512-oNjBvzLq2GPZtJphCjLqXow/cHySHSgtxvKZb7OqSZ/xHgw6NWNhfad+6AB9cLeVm6eA9d/qMll3JdEHjy6M+A==}
     peerDependencies:
       css-tree: ^3.2.1
     peerDependenciesMeta:
@@ -2482,8 +2490,8 @@ packages:
     peerDependencies:
       stylelint: ^17.0.0
 
-  stylelint@17.12.0:
-    resolution: {integrity: sha512-KIlzWXMHUvgfPUR0R7TK3H80yCIi0uoivUwf+6Az4yrHJD1Q3c1qIkh/H5Z0i/K3QXgtq/UMEkWyBUSUwnpnOg==}
+  stylelint@17.13.0:
+    resolution: {integrity: sha512-G1WYzMerp7ihOaIe9VJCHLt12MoAD2QLf1AFerYP37+BCRBUK5UCpq8e/mN+zCIaJPKQcaxhE4WlPmqdiOx/gw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -3139,6 +3147,10 @@ snapshots:
       '@csstools/css-tokenizer': 4.0.0
 
   '@csstools/css-syntax-patches-for-csstree@1.1.4(css-tree@3.2.1)':
+    optionalDependencies:
+      css-tree: 3.2.1
+
+  '@csstools/css-syntax-patches-for-csstree@1.1.5(css-tree@3.2.1)':
     optionalDependencies:
       css-tree: 3.2.1
 
@@ -5173,20 +5185,20 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  stylelint-config-recommended@18.0.0(stylelint@17.12.0(typescript@6.0.3)):
+  stylelint-config-recommended@18.0.0(stylelint@17.13.0(typescript@6.0.3)):
     dependencies:
-      stylelint: 17.12.0(typescript@6.0.3)
+      stylelint: 17.13.0(typescript@6.0.3)
 
-  stylelint-config-standard@40.0.0(stylelint@17.12.0(typescript@6.0.3)):
+  stylelint-config-standard@40.0.0(stylelint@17.13.0(typescript@6.0.3)):
     dependencies:
-      stylelint: 17.12.0(typescript@6.0.3)
-      stylelint-config-recommended: 18.0.0(stylelint@17.12.0(typescript@6.0.3))
+      stylelint: 17.13.0(typescript@6.0.3)
+      stylelint-config-recommended: 18.0.0(stylelint@17.13.0(typescript@6.0.3))
 
-  stylelint@17.12.0(typescript@6.0.3):
+  stylelint@17.13.0(typescript@6.0.3):
     dependencies:
       '@csstools/css-calc': 3.2.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
-      '@csstools/css-syntax-patches-for-csstree': 1.1.4(css-tree@3.2.1)
+      '@csstools/css-syntax-patches-for-csstree': 1.1.5(css-tree@3.2.1)
       '@csstools/css-tokenizer': 4.0.0
       '@csstools/media-query-list-parser': 5.0.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/selector-resolve-nested': 4.0.0(postcss-selector-parser@7.1.1)
@@ -5349,7 +5361,7 @@ snapshots:
 
   uuid@14.0.0: {}
 
-  vite-plugin-checker@0.14.1(eslint@10.4.1)(meow@14.1.0)(optionator@0.9.4)(oxlint@1.68.0)(stylelint@17.12.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)):
+  vite-plugin-checker@0.14.1(eslint@10.4.1)(meow@14.1.0)(optionator@0.9.4)(oxlint@1.68.0)(stylelint@17.13.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)):
     dependencies:
       '@babel/code-frame': 7.29.7
       chokidar: 5.0.0
@@ -5364,7 +5376,7 @@ snapshots:
       meow: 14.1.0
       optionator: 0.9.4
       oxlint: 1.68.0
-      stylelint: 17.12.0(typescript@6.0.3)
+      stylelint: 17.13.0(typescript@6.0.3)
       typescript: 6.0.3
 
   vite@8.0.16(@types/node@25.9.1):
