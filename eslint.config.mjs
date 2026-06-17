@@ -20,7 +20,6 @@ import globals from "globals";
 
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import reactCompiler from "eslint-plugin-react-compiler";
 
 export default tseslint.config(
   { ignores: ["dist"] },
@@ -36,9 +35,6 @@ export default tseslint.config(
 
       // Hot Reload
       reactRefresh.configs.vite,
-
-      // React Compiler
-      reactCompiler.configs.recommended,
     ],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
