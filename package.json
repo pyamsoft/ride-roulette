@@ -52,7 +52,7 @@
     "eslint-plugin-react-refresh": "0.5.3",
     "globals": "17.6.0",
     "jsdom": "29.1.1",
-    "npm-check-updates": "22.2.3",
+    "npm-check-updates": "22.2.7",
     "oxlint": "1.70.0",
     "prettier": "3.8.4",
     "stylelint": "17.13.0",
