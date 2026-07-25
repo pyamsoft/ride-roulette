@@ -10,7 +10,7 @@
     "jotai": "2.20.2",
     "react": "19.2.7",
     "react-confetti": "6.4.0",
-    "react-dom": "19.2.7",
+    "react-dom": "19.2.8",
     "react-window": "2.2.7",
     "uuid": "14.0.1"
   },
