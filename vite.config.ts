@@ -48,7 +48,7 @@ export default defineConfig(({ mode }) => {
         pluginChecker({
           typescript: true,
           oxlint: {
-            lintCommand: `oxlint --deny-warnings .`
+            lintCommand: `oxlint --deny-warnings .`,
           },
           stylelint: {
             lintCommand: "stylelint 'src/**/*.css'",
