@@ -31,7 +31,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "3.3.7",
     "@eslint/js": "10.0.1",
-    "@jest/globals": "30.5.1",
+    "@jest/globals": "30.5.2",
     "@rolldown/plugin-babel": "0.2.4",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
