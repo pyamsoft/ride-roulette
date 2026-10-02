@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import packageJson from "./package.json" with { type: "json" };
 import { defineConfig } from "vitest/config";
 import { UserConfig } from "vite";
 import pluginReact, { reactCompilerPreset } from "@vitejs/plugin-react";
@@ -64,6 +65,10 @@ export default defineConfig(({ mode }) => {
 
   return {
     ...baseConfig,
+    define: {
+      __PACKAGE_NAME__: JSON.stringify(packageJson.name),
+      __PACKAGE_VERSION__: JSON.stringify(packageJson.version),
+    },
     build: {
       sourcemap: isProduction,
       minify: isProduction,

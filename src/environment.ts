@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 
-import { version } from "../package.json";
-
 const DEV_URL = "TODO-GET-URL";
+
+const nodeNameToReadableName = function (s: string): string {
+  return s
+    .replace(/-/g, " ")
+    .split(" ")
+    .map((s) => s[0].toUpperCase() + s.slice(1))
+    .join(" ");
+};
 
 export const AppEnvironment = {
   objectType: "AppEnvironment",
@@ -24,8 +30,8 @@ export const AppEnvironment = {
   IS_DEBUG_MODE: process.env.NODE_ENV === "development",
   IS_TEST_MODE: process.env.NODE_ENV === "test",
 
-  APP_NAME: "Ride Roulette",
-  APP_VERSION: version,
+  APP_NAME: nodeNameToReadableName(__PACKAGE_NAME__),
+  APP_VERSION: __PACKAGE_VERSION__,
 
   get IS_DEV() {
     const url = window.location.href;
