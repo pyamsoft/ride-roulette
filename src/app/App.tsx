@@ -40,7 +40,9 @@ import { useFirstMount } from "../hooks/useFirstMount";
 export const App: React.FunctionComponent = function () {
   useInstallAppGlobals();
 
-  const today = React.useMemo(() => new Date(), []);
+  const todayState = React.useState(() => new Date());
+  const today = todayState[0];
+
   const [showSplash, setShowSplash] = useAtom(ShowSplashScreen);
   const [attractions, setAttractions] = useAtom(AttractionList);
   const [attractionLoading, setAttractionLoading] = useAtom(AttractionLoading);

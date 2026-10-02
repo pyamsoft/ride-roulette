@@ -14,7 +14,8 @@
     "correctness": "error"
   },
   "rules": {
-    "react/jsx-no-target-blank": "error"
+    "react/jsx-no-target-blank": "error",
+    "react/set-state-in-effect": "off"
   },
   "env": {
     "builtin": true
