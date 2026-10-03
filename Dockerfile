@@ -8,6 +8,7 @@ RUN umask 0022
 # Copy src files
 COPY package.json ./
 COPY pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml ./
 COPY eslint.config.mjs ./
 COPY tsconfig.json ./
 COPY tsconfig.node.json ./
