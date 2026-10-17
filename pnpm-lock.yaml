@@ -191,8 +191,8 @@ importers:
         specifier: 19.3.0
         version: 19.3.0(react@19.3.0)
       react-window:
-        specifier: 2.3.3
-        version: 2.3.3(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 2.3.4
+        version: 2.3.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       uuid:
         specifier: 14.0.2
         version: 14.0.2
@@ -2497,8 +2497,8 @@ packages:
       react: '>=16.6.0'
       react-dom: '>=16.6.0'
 
-  react-window@2.3.3:
-    resolution: {integrity: sha512-uu/dTwysXp+YL+i5GW/cC/3JrqyE7oE6DYXYVlTeMaDSDgCI+UGo+XCKwXfS8uoFPih8TJYTnikqjAnbDvn75Q==}
+  react-window@2.3.4:
+    resolution: {integrity: sha512-CnRWoRg+ZnQkLcULSNdbgKJnfcexy9x+9ELOATmDlDv3ZoADyLJc22vN3JRvMV651A6gFwYBlxllU9X+H9dyhQ==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
@@ -5134,7 +5134,7 @@ snapshots:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
-  react-window@2.3.3(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  react-window@2.3.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
